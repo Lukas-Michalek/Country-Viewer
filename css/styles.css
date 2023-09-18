@@ -24,15 +24,25 @@
     animation: animate-preloader 1s linear infinite;
 }
 
+#map { 
+    height: 90vh;
+    width: 100vw;
+    }
+
 header {
     height: 10vh;
     width: 100vw;
-    border: blue 3px solid;
+    border:  blue 3px solid;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+
 }
 
-#map { 
-    height: 90vh;
-    width: 100vw; }
+/* #initial-location {
+    position: absolute;
+} */
 
 @-webkit-keyframes animate-preloader {
     

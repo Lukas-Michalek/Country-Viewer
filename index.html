@@ -20,11 +20,44 @@
 </head>
 <body>
     <header>
-        <p id="initial-location"></p>
+
+        <!-- <button id="getJson">Get Json!</button> -->
+
+        <form id="countryForm">
+            
+            <label>Choose a Country:
+                <input 
+                    type="text" 
+                    list="countryList" 
+                    name="countryName" 
+                    id="countryName"
+                    required/>
+            </label>
+                
+            <datalist id="countryList">
+                <!-- <option value="Slovakia">Slovakia</option>
+                <option value="Austria">Austria</option>
+                <option value="Russia">Russia</option>
+                <option value="Australia">Australia</option>
+                <option value="Congo">Congo</option>
+                <option value="United States">United States</option> -->
+            </datalist>
+
+            <button 
+                type="submit" 
+                class="btn btn-primary" id="countryList-submitBtn"
+                >
+                Submit
+            </button>
+        </form>
+
+        <div id="invalidOption"></div>
     </header>
     
 
-    <div id="map"></div>
+    <div id="map">
+        <!-- <div id="initial-location"></div> -->
+    </div>
 
     
 
