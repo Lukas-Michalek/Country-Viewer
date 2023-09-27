@@ -88,7 +88,7 @@ $(document).ready(function(){
         // *****        CUSTOM MARKER       ********************************** //
         // ******************************************************************* //
         
-        // Custom Marker
+        // * Initial Location marker
         var iconOptions = {
             iconUrl: 'resources/location-pin.png',
             iconSize: [50,50]
@@ -99,8 +99,12 @@ $(document).ready(function(){
         var markerOptions = {
             icon: customMarker,
             draggable: true,
-            title: "I am cool marker!",
+            title: "This is my starting Location",
         }
+
+        
+
+
         
         // ADDING MARKER TO MAP
         var marker = L.marker([initialLatitude, initialLongitude], markerOptions).addTo(map);
@@ -262,6 +266,44 @@ $(document).ready(function(){
 
                             generalInfoMenuDiv.appendChild(languagesButton);
 
+                            // * Population
+
+                            const populationButton = document.createElement("button");
+                            populationButton.setAttribute("id","populationButton");
+                            populationButton.innerHTML = "Population";
+
+                            generalInfoMenuDiv.appendChild(populationButton);
+
+                            // * Interesting Stuff
+
+                            const interestingStuffButton = document.createElement("button");
+                            interestingStuffButton.setAttribute("id","interestingStuffButton");
+                            interestingStuffButton.innerHTML = "Interesting Stuff";
+
+                            generalInfoMenuDiv.appendChild(interestingStuffButton);
+
+                            // * Time Zones
+
+                            const timeZonesButton = document.createElement("button");
+                            timeZonesButton.setAttribute("id","timeZonesButton");
+                            timeZonesButton.innerHTML = "Time Zones";
+
+                            generalInfoMenuDiv.appendChild(timeZonesButton);
+
+                            // * Flag
+
+                            const flagsButton = document.createElement("button");
+                            flagsButton.setAttribute("id","flagsButton");
+                            flagsButton.innerHTML = "Flag";
+
+                            generalInfoMenuDiv.appendChild(flagsButton);
+
+                            // *
+                            const neighboursButton = document.createElement("button");
+                            neighboursButton.setAttribute("id","neighboursButton");
+                            neighboursButton.innerHTML = "Neighbours";
+
+                            generalInfoMenuDiv.appendChild(neighboursButton);
 
 
                             // * Main Menu Back Button
@@ -414,7 +456,29 @@ $(document).ready(function(){
 
                                 $("#capitalCityDiv").append(`<p><h5>The Capital city of ${feature.properties.name} is: <b>${result['capital']}</b></h5></p>`);
 
+                                $("#capitalCityDiv").append(`<p><h5>It's coordinates are as follows:</h5><b>Latitude: ${result["capitalLatLng"][0]}°</b><br><b>Longitude: ${result["capitalLatLng"][1]}°</b><br><br>You may also see the location of the capital pin-pointed on your map!</p>`)
+
                                 console.log("Capital is: " + result['capital']);
+
+                                
+                                // * Capital City Custom Marker
+
+                                var capitalMarkerIconOptions = {
+                                    iconUrl: 'resources/capital-marker.png',
+                                    iconSize: [50,50]
+                                }
+
+                                var customCapitalMarker = L.icon(capitalMarkerIconOptions);
+                                
+                                var capitalMarkerOptions = {
+                                    icon: customCapitalMarker,
+                                    draggable: true,
+                                    title: `This is ${result['capital']}, the capital of ${feature.properties.name}`,
+                                }
+                                
+                                
+                                var capitalMarker = L.marker([result["capitalLatLng"][0], result["capitalLatLng"][1]], capitalMarkerOptions).addTo(map);
+
 
                                 const capitalCityBackButton = document.createElement("button");
                                 capitalCityBackButton.setAttribute("id","capitalCityBackButton");
@@ -432,6 +496,8 @@ $(document).ready(function(){
                                 $("#generalInfoMenuDiv").show();
 
                             }
+
+                            
 
                         }
 
@@ -485,13 +551,13 @@ $(document).ready(function(){
 
                                 const allLangugesArr = Object.keys(result['languages']);
 
-                                $("#languagesDiv").append(`<p><h3>People in ${feature.properties.name} speaks these languages:<br></h3></p>`);
+                                $("#languagesDiv").append(`<p><h5>People in ${feature.properties.name} speaks these languages:<br></h5></p>`);
 
                                 for(index = 0; index < allLangugesArr.length; index++){
 
                                     let language = allLangugesArr[index]
 
-                                    $("#languagesDiv").append(`<p><b><i>- ${result["languages"][language]}</i></b></p>`)
+                                    $("#languagesDiv").append(`<p><b><i><h5>- ${result["languages"][language]}</h5></i></b></p>`)
 
                                 }
 
@@ -511,6 +577,219 @@ $(document).ready(function(){
                             }
 
                             
+                        }
+
+                        populationButton.onclick = function(){
+
+                            $("#generalInfoMenuDiv").hide();
+
+                            if(document.getElementById("populationDiv")){
+
+                                $("#populationDiv").show();
+
+                            } else{
+
+                                const populationDiv = document.createElement("div");
+                                populationDiv.setAttribute("id","populationDiv");
+                                $("#popUpDiv").append(populationDiv);
+
+                                $("#populationDiv").append(`<p><h5>The population(according to the latest data) of <b>${feature.properties.name}</b> is:<br> </h5><h3><b>${result["population"]} inhabitants</b></h3></p>`);
+
+                                const populationBackButton = document.createElement("button");
+                                populationBackButton.setAttribute("id","populationBackButton");
+                                populationBackButton.innerHTML = "Population Back Button";
+
+                                $("#populationDiv").append(populationBackButton);
+
+                            }
+
+                            populationBackButton.onclick = function(){
+
+                                $("#populationDiv").hide();
+                                $("#generalInfoMenuDiv").show();
+
+                            }
+
+                        }
+
+                        interestingStuffButton.onclick = function(){
+
+                            $("#generalInfoMenuDiv").hide();
+
+                            if(document.getElementById('interestingStuffDiv')){
+
+                                $("#interestingStuffDiv").show();
+                            } else{
+
+                                const interestingStuffDiv = document.createElement("div");
+                                interestingStuffDiv.setAttribute("id","interestingStuffDiv");
+                                                                
+                                $("#popUpDiv").append(interestingStuffDiv);
+
+                                const carDetailsArr = Object.keys(result["drivingSide"]);
+
+                                console.log(`Car details Arr = ${carDetailsArr}`);
+
+                                const side = carDetailsArr[1];
+                                const sign = carDetailsArr[0];
+
+                                $("#interestingStuffDiv").append(`<p><h5>In <b>${feature.properties.name}</b>, people are driving on <b>${result["drivingSide"][side]} hand side</b> and use vehicle registration plates starting with <b>${result["drivingSide"][sign]}</b><br><br>It is also worth noting that the week in ${feature.properties.name} starts on <b>${result["startOfWeek"]}.</b></h5></p>`);
+
+                                const interestingStuffBackButton = document.createElement("button");
+                                interestingStuffBackButton.setAttribute("id","interestingStuffBackButton");
+                                interestingStuffBackButton.innerHTML = "Interesting Stuff Back Button";
+
+                                $("#interestingStuffDiv").append(interestingStuffBackButton);
+
+                            }
+
+                            interestingStuffBackButton.onclick = function(){
+
+                                $("#interestingStuffDiv").hide();
+                                $("#generalInfoMenuDiv").show();
+                                
+
+                            }
+
+                        }
+
+                        timeZonesButton.onclick = function(){
+
+                            $("#generalInfoMenuDiv").hide();
+
+                            if(document.getElementById("timeZonesDiv")){
+
+                                $("#timeZonesDiv").show();
+
+                            } else{
+
+                                const timeZonesDiv = document.createElement("div");
+                                timeZonesDiv.setAttribute("id","timeZonesDiv");
+
+                                $("#popUpDiv").append(timeZonesDiv);
+
+
+                                $("#timeZonesDiv").append(`<p><h4><b>${feature.properties.name} has these time zones: </b></h4></p>`)
+
+                                
+                                for(index = 0; index < result["timezones"].length; index++){
+
+                                    $("#timeZonesDiv").append(`<p><i><b>--> ${result["timezones"][index]}</b></i></p>`)
+                                }
+
+                                const timeZonesBackButton = document.createElement("button");
+                                timeZonesBackButton.setAttribute("id","timeZonesBackButton");
+                                timeZonesBackButton.innerHTML = "Time Zones Back Button";
+
+                                $("#timeZonesDiv").append(timeZonesBackButton);
+                                
+
+                            } 
+
+                            timeZonesBackButton.onclick = function(){
+
+                                $("#timeZonesDiv").hide();
+                                $("#generalInfoMenuDiv").show();
+                            }
+
+                        }
+
+                        flagsButton.onclick = function(){
+                            
+                            $("#generalInfoMenuDiv").hide();
+
+                            if(document.getElementById('flagsDiv')){
+                                $("#flagsDiv").show();
+                            } else{
+
+                                const flagsDiv = document.createElement("div");
+                                flagsDiv.setAttribute("id","flagsDiv");
+
+                                $("#popUpDiv").append(flagsDiv);
+
+                                
+                                if(result["flags"]["alt"]){
+                                    $("#flagsDiv").append(`<p><h5>${result["flags"]["alt"]}</h5><br><br></p>`);}
+                                
+                                
+
+
+                                $("#flagsDiv").append(`<h4><b>The flag of ${feature.properties.name}:</b><br></h4>`);
+
+                                $("#flagsDiv").append(`<img src=${result["flags"]["png"]} alt=${feature.properties.name} width="100vv" height="75vh"><br><br>`);
+
+
+                                $("#flagsDiv").append(`<h4><b>The coat of arms of ${feature.properties.name}:</b><br></h4>`);
+
+                                $("#flagsDiv").append(`<img src=${result["coatOfArms"]["png"]} alt=${feature.properties.name} width="100vw" height="100vh"><br><br>`);
+
+
+                                const flagsBackButton = document.createElement("button");
+                                flagsBackButton.setAttribute("id","flagsBackButton");
+                                flagsBackButton.innerHTML = "Flags Back Button";
+
+                                $("#flagsDiv").append(flagsBackButton);
+                            }
+
+                            flagsBackButton.onclick = function(){
+
+                                $("#flagsDiv").hide();
+                                $("#generalInfoMenuDiv").show();
+
+                            }
+
+
+
+                        }
+
+                        neighboursButton.onclick = function(){
+                            
+                            $("#generalInfoMenuDiv").hide();
+
+                            if(document.getElementById('neighboursDiv')){
+                                
+                                $("#neighboursDiv").show();
+
+                            } else{
+
+                                const neighboursDiv = document.createElement("div");
+                                neighboursDiv.setAttribute("id","neighboursDiv");
+
+                                $("#popUpDiv").append(neighboursDiv);
+
+
+                                $("#neighboursDiv").append(`<p><h5><b>${feature.properties.name}</b> neighbours with these countries:</h5><br></p>`);
+
+
+
+                                for(let index = 0; index < result["borders"].length; index++){
+
+                                    let neighbour = result["borders"][index];
+
+                                    $("#neighboursDiv").append(`<p><b> - ${neighbour} - </b></p>`);
+
+                                }
+
+                                const neighboursBackButton = document.createElement("button");
+                                neighboursBackButton.setAttribute("id","neighboursBackButton");
+                                neighboursBackButton.innerHTML = "Neighbours Back Button";
+
+                                $("#neighboursDiv").append(neighboursBackButton);
+
+
+
+                                
+
+                            }
+
+                            neighboursBackButton.onclick = function(){
+
+                                $("#neighboursDiv").hide();
+                                $("#generalInfoMenuDiv").show();
+
+
+                            }
+
                         }
 
                         mainMenuBackButton.onclick = function(){

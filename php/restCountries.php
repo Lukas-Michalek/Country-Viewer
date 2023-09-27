@@ -27,9 +27,14 @@
 
     // Checking if the country has a key called boders - Japan has no borders!
     
-    if (array_key_exists("borders",$output)){
-        $output["borders"] = $decode[0]["borders"];
-    }
+    // if (array_key_exists("borders",$output)){
+    //     $output["borders"] = $decode[0]["borders"];
+    // }
+
+    $output["borders"] = $decode[0]["borders"];
+
+    $output["cca3"] = $decode[0]["cca3"];
+
 
     $output['name'] = $decode[0]['name'];
     
@@ -45,7 +50,9 @@
 
     $output["languages"] = $decode[0]["languages"];
 
-    
+    $output["capitalLatLng"] = $decode[0]["capitalInfo"]["latlng"];
+
+    $output["startOfWeek"] = $decode[0]["startOfWeek"];
 
     $output["population"] = $decode[0]["population"];
 
