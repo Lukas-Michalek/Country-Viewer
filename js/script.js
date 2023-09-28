@@ -758,18 +758,26 @@ $(document).ready(function(){
                                 $("#popUpDiv").append(neighboursDiv);
 
 
-                                $("#neighboursDiv").append(`<p><h5><b>${feature.properties.name}</b> neighbours with these countries:</h5><br></p>`);
+                                if(!(result["borders"])){
+
+                                    $("#neighboursDiv").append(`<p><h5>Well, It seems that <b>${feature.properties.name}</b> has no neighbors as it is Island country</h5></p>`)
+                                    
+                                } else{
+
+                                    $("#neighboursDiv").append(`<p><h5><b>${feature.properties.name}</b> neighbours with these countries:</h5><br></p>`);
 
 
+                                    for(let index = 0; index < result["borders"].length; index++){
 
-                                for(let index = 0; index < result["borders"].length; index++){
+                                        // * All neighbor states are represent in JSON as array, so for example [AU,SK,HRV..]. What I do here is to use these values and thanks to the fact that I have already populated datalist #countryList with all states where for example AU is value and Austria is the written text that belongs to that value. So I will just pair them and get them printed with full name as well
+                                        
+                                        let neighbourValue = result["borders"][index];
+                                        let neighborState = $("#countryList option[value=" + neighbourValue + "]").text();
 
-                                    let neighbour = result["borders"][index];
+                                        $("#neighboursDiv").append(`<p><b> - ${neighbourValue} - ${neighborState}</b></p>`);
 
-                                    $("#neighboursDiv").append(`<p><b> - ${neighbour} - </b></p>`);
-
+                                    }
                                 }
-
                                 const neighboursBackButton = document.createElement("button");
                                 neighboursBackButton.setAttribute("id","neighboursBackButton");
                                 neighboursBackButton.innerHTML = "Neighbours Back Button";
