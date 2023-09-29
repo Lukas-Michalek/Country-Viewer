@@ -111,9 +111,9 @@ $(document).ready(function(){
         // ADDING MARKER TO MAP
         var marker = L.marker([initialLatitude, initialLongitude], markerOptions).addTo(map);
 
-        //******************************************************************* //
-        // *****        COUNTRY BORDERS - GEOJSON    ************************ //
-        // ******************************************************************* //
+    //******************************************************************* //
+    // *****        COUNTRY BORDERS - GEOJSON    ************************ //
+    // ******************************************************************* //
 
 
 
@@ -143,9 +143,7 @@ $(document).ready(function(){
         function onEachFeature(feature,layer){
 
             $('#popUpDiv').empty();
-
-            
-            
+           
             const popUpDiv = document.createElement("div"); 
             popUpDiv.setAttribute("id", "popUpDiv");
             
@@ -194,7 +192,7 @@ $(document).ready(function(){
 
                         if(result.status.name == "ok"){
 
-                        alert('Data Received Fine!');
+                        console.log('WeatherData Received Fine!');
 
                         // console.log("The result from restCountries is: " + (JSON.stringify(result)));
 
@@ -841,7 +839,8 @@ $(document).ready(function(){
                     data: {
 
                         lat: lat,
-                        lon: long,
+                        
+                        lon: long
                     },
 
                     success: function(result){
@@ -849,108 +848,426 @@ $(document).ready(function(){
                         
                         if(result.status.name == "ok"){
                         
-                            alert("API WEATHER DATA RECEIVED!");
+                            console.log("API WEATHER DATA RECEIVED!");
 
                             // console.log("The result from openWeatherApi request is: " + (JSON.stringify(result)));
 
 
                             $("#mainMenuDiv").hide();
 
-                            // * Initialize Weather Main Menu Info Div
-
-                            if(document.getElementById('weatherInfoDiv')){
-
-                                $("#weatherInfoDiv").show();
-
-                                console.log(`weatherInfoDiv exist!`);
                             
-                            } else{
+                            // * 5 days of forecast Div
 
-                                console.log(`weatherInfoDiv DOES NOT exist!`);
+                            if(document.getElementById('forecastDiv')){
+                                $("#forecastDiv").show();
 
-                                const weatherInfoDiv = document.createElement("div");
-                                weatherInfoDiv.setAttribute('id','weatherInfoDiv');
+                            } else {
 
-                                const weatherInfoDivText = document.createElement('p');
-                                weatherInfoDivText.setAttribute('id','weatherInfoDivText');
+                                const forecastDiv = document.createElement('div');
+                                forecastDiv.setAttribute('id','forecastDiv');
                                 
-                                weatherInfoDiv.append(weatherInfoDivText);
+                                popUpDiv.append(forecastDiv);
 
-
-                                console.log(`city is: ${result['city']['name']}`);
-
-                                weatherInfoDivText.innerHTML = (`<p>You are viewing weather for <b>${result['city']['name']}</b></p>`);
-
-
-                                const weatherInfoBackButton = document.createElement("button");
-                                weatherInfoBackButton.setAttribute('id','weatherInfoBackButton');
-                                weatherInfoBackButton.innerHTML = 'Weather Info Back'
-                                
-                                weatherInfoDiv.append(weatherInfoBackButton);
-                                
-                               
-                                popUpDiv.append(weatherInfoDiv);
-
-                                // * Current Weather
-
-                                const currentWeatherButton = document.createElement("button");
-                                currentWeatherButton.setAttribute('id','currentWeatherButton');
-                                currentWeatherButton.innerHTML = 'Current Weather';
-
-                                weatherInfoDiv.append(currentWeatherButton);
-
-
-                                // * Current Weather Button
-                                
-                                currentWeatherButton.onclick = function(){
-
-                                    $("#weatherInfoDiv").hide();
-
-                                    if(document.getElementById('currentWeatherDiv')){
-
-                                        $("#currentWeatherDiv").show();
+                                const forecastInfoDivText = document.createElement('p');
+                                    forecastInfoDivText.setAttribute('id','forecastInfoDivText');
                                     
-                                    } else{
+                                    forecastDiv.append(forecastInfoDivText);
 
-                                        const currentWeatherDiv = document.createElement('div');
-                                        currentWeatherDiv.setAttribute('id','currentWeatherDiv');
+
+                                    console.log(`city is: ${result['city']['name']}`);
+
+                                    // Get The current datetime
+
+                                    const currentTimeStamp = Date.now();
+
+                                    const currentFullTime = unixTimeConverter(currentTimeStamp)
+
+                                    console.log(`Current Time is: ${currentFullTime}`);
+
+                                    const currentDate = currentFullTime.slice(0,10);
+                                    const currentTime = currentFullTime.slice(11,19)
+
+                                    console.log(`Current Date is: ${currentDate}`);
+                                    console.log(`Current Time is: ${currentTime}`);
+
+
+
+
+
+                                    forecastInfoDivText.innerHTML = (`<p>You are viewing weather for <b>${result['city']['name']}</b><br><br><br>GPS Location of city centre is:<br><br><b><i>Latittude: ${result['city']['coord']['lat']}<br>Longitude: ${result['city']['coord']['lon']}<br><br>Please pick the day: <br><br></p>`);
+
+                                
+                                // * Today Forecast button create
+
+                                const todayButton = document.createElement('button');
+                                todayButton.setAttribute('id','todayButton');
+                                todayButton.innerHTML = "Today";
+
+                                forecastDiv.append(todayButton);
+
+                                // * Tommorrow Forecast button create
+
+                                const tommorrowButton = document.createElement('button');
+                                tommorrowButton.setAttribute('id','tommorrowButton');
+                                tommorrowButton.innerHTML = "Tommorrow";
+
+                                forecastDiv.append(tommorrowButton);
+
+                                // * 5 day forecast button create
+
+                                const fiveDaysButton = document.createElement('button');
+                                fiveDaysButton.setAttribute('id','fiveDaysButton');
+                                fiveDaysButton.innerHTML = "5 Days Forecast";
+
+                                forecastDiv.append(fiveDaysButton);
+
+                                
+                                // * Forecast Back button create
+
+                                const forecastBackButton = document.createElement("button");
+                                forecastBackButton.setAttribute('id','forecastBackButton');
+                                forecastBackButton.innerHTML = "Forecast Back";
+
+                                forecastDiv.append(forecastBackButton)
+
+
+// *****************************************************************************
+                               
+                                // * Today Button
+
+                            todayButton.onclick = function(){
+
+                                $("#forecastDiv").hide();
+                                weatherInfo();
+                            }
+
+                            tommorrowButton.onclick = function(){
+
+                                $("#forecastDiv").hide();
+                                weatherInfo();
+                            }
+
+                            // * Five Days Forecast
+
+                            fiveDaysButton.onclick = function(){
+                                $("#forecastDiv").hide();
+                                weatherInfo();
+                            }
+
+
+
+                               // * Forecast Back Button
+                            forecastBackButton.onclick = function(){
+
+                                $("#forecastDiv").hide();
+                                $("#mainMenuDiv").show()
+                               
+                            }
+                                
+
+
+                            
+                            
+//************************************************************************ */                            
+
+
+                                // * Initialize Weather Main Menu Info Div
+
+                                function weatherInfo(){
+
+                                if(document.getElementById('weatherInfoDiv')){
+
+                                    $("#weatherInfoDiv").show();
+
+                                    console.log(`weatherInfoDiv exist!`);
+                                
+                                } else{
+
+                                    console.log(`weatherInfoDiv DOES NOT exist!`);
+
+                                    const weatherInfoDiv = document.createElement("div");
+                                    weatherInfoDiv.setAttribute('id','weatherInfoDiv');
+
+                                    const weatherInfoText = document.createElement('p');
+                                    weatherInfoText.setAttribute('id','weatherInfoText');
+
+                                    weatherInfoText.innerHTML = ('<h4>What specifically would you like to know?<br><br><h4>')
+
+                                    weatherInfoDiv.append(weatherInfoText);
+
+                                
+                                    // * Current Weather Button Create
+
+                                    const currentWeatherButton = document.createElement("button");
+                                    currentWeatherButton.setAttribute('id','currentWeatherButton');
+                                    currentWeatherButton.innerHTML = 'Current Weather';
+
+                                    weatherInfoDiv.append(currentWeatherButton);
+
+                                    // * Specific Weather Button Create
+
+                                    const specificWeatherButton = document.createElement('button');
+                                    specificWeatherButton.setAttribute('id','specificWeatherButton');
+                                    specificWeatherButton.innerHTML = 'More Specific Weather Info';
+
+                                    weatherInfoDiv.append(specificWeatherButton);
+
+                                    // * Wind Information Button Create
+
+                                    const windInfoButton = document.createElement("button");
+                                    windInfoButton.setAttribute('id','windInfoButton');
+                                    windInfoButton.innerHTML = 'Wind Info';
+
+                                    weatherInfoDiv.append(windInfoButton);
+
+                                    // * Weather Info Back Button Create
+
+                                    const weatherInfoBackButton = document.createElement("button");
+                                    weatherInfoBackButton.setAttribute('id','weatherInfoBackButton');
+                                    weatherInfoBackButton.innerHTML = 'Weather Info Back'
+                                    
+                                    weatherInfoDiv.append(weatherInfoBackButton);
+                                                                
+                                    popUpDiv.append(weatherInfoDiv);
+
+        // ******************************************************************* //
+        // ******************************************************************* //
+        // ******************************************************************* //
+
+                                
+
+
+                                    // * Current Weather Button
+                                    
+                                    currentWeatherButton.onclick = function(){
+
+                                        $("#weatherInfoDiv").hide();
+
+                                        if(document.getElementById('currentWeatherDiv')){
+
+                                            $("#currentWeatherDiv").show();
                                         
-                                        $("#popUpDiv").append(currentWeatherDiv);
+                                        } else{
+
+                                            const currentWeatherDiv = document.createElement('div');
+                                            currentWeatherDiv.setAttribute('id','currentWeatherDiv');
+                                            
+                                            $("#popUpDiv").append(currentWeatherDiv);
+
+                                            
+                                            let time = result['list'][0]["dt_txt"];
 
 
+                                            
 
-                                        const currentWeatherBackButton = document.createElement("button");
-                                        currentWeatherBackButton.setAttribute('id','currentWeatherBackButton');
-                                        currentWeatherBackButton.innerHTML = 'Current Weather Back Button';
+
+                                            
+                                            const kelvinTemp = parseFloat(result['list'][0]['main']['temp']);
+                                            
+                                            const celsiusTemp = (kelvinTemp - 273.15).toFixed(2);
+
+                                            const fahrenheitTemp = ((kelvinTemp - 273.15) * 9/5 + 32).toFixed(2);
+                                            
+                                            const kelvinFeelsLike = parseFloat(result['list'][0]['main']['feels_like']);
+                                            
+                                            const celsiusFeelsLike = (kelvinTemp - 273.15).toFixed(2);
+
+                                            const fahrenheitFeelsLike = ((kelvinFeelsLike - 273.15) * 9/5 + 32).toFixed(2);
+                                            
+                                            const seaLevelPressure = result['list'][0]['main']['sea_level'];
+                                            
+                                            const groundLevelPressure = result['list'][0]['main']['grnd_level'];
+
+                                            const humidity = result['list'][0]['main']["humidity"];
+
+
+                                            const currentWeatherText = document.createElement('p');
+                                            currentWeatherText.setAttribute('id','currentWeatherText');
+                                            
+                                            currentWeatherText.innerHTML = (`The last measurment was taken at <b><i>${time}</i></b> of Local time of <b><i>${feature.properties.name}</i></b><br><br>The temperature is:<br> <i><b>${kelvinTemp} °K => ${celsiusTemp} °C => ${fahrenheitTemp} °F</b></i>,<br><br>however it feels more like:<br> <b><i>${kelvinFeelsLike} °K => ${celsiusFeelsLike} °C => ${fahrenheitFeelsLike} °F</i></b><br><br>Sea Level pressure at the moment is: <b><i>${seaLevelPressure} hPa</i></b><br><br>Ground Level Pressure at the moment is: <b><i>${groundLevelPressure} hPa</i></b><br><br>Humidity is: <b><i>${humidity}%</i></b><br><br>`);
+
+                                            currentWeatherDiv.append(currentWeatherText);
+                                            
                                         
-                                        currentWeatherDiv.append(currentWeatherBackButton)
+
+
+                                            const currentWeatherBackButton = document.createElement("button");
+                                            currentWeatherBackButton.setAttribute('id','currentWeatherBackButton');
+                                            currentWeatherBackButton.innerHTML = 'Current Weather Back Button';
+                                            
+                                            currentWeatherDiv.append(currentWeatherBackButton);
 
 
 
-                                    } 
+                                        } 
 
-                                    currentWeatherDiv.onclick = function(){
+                                        function unixTimeConverter(unixTimestamp){
 
-                                        $("#currentWeatherDiv").hide();
-                                        $("#weatherInfoDiv").show();
+                                            console.log(`Unix Timestamp is: ${unixTimestamp}`)
+                                            
+                                            var JSdate = new Date(unixTimestamp * 1000);
+                                            
+                                            console.log(`JS DATE is: ${JSdate}`)
+
+
+
+
+                                            // Generate date string
+                                            console.log(JSdate.toLocaleDateString("en-US"));   // Prints: 5/6/2022
+                                            console.log(JSdate.toLocaleDateString("en-GB"));   // Prints: 06/05/2022
+                                            console.log(JSdate.toLocaleDateString("default")); // Prints: 5/6/2022
+                                            
+                                            // Generate time string
+                                            console.log(JSdate.toLocaleTimeString("en-US"));   // Prints: 1:10:34 PM
+                                            console.log(JSdate.toLocaleTimeString("it-IT"));   // Prints: 13:10:34
+                                            console.log(JSdate.toLocaleTimeString("default")); // Prints: 1:10:34 PM
+
+                                            const date = JSdate.toLocaleDateString("en-GB");
+
+                                            const time = JSdate.toLocaleTimeString("it-IT");
+
+                                            return (date + " " + time);
+                                            
+    
+                                        }
+
+                                        currentWeatherDiv.onclick = function(){
+
+                                            $("#currentWeatherDiv").hide();
+                                            $("#weatherInfoDiv").show();
+
+
+                                        }
+                                    }
+
+                                    // * Specific Weather Info
+                                    specificWeatherButton.onclick = function(){
+
+                                        $("#weatherInfoDiv").hide();
+
+                                        if(document.getElementById('specificWeatherDiv')){
+
+                                            $("#specificWeatherDiv").show();
+                                        
+                                        } else{
+
+                                            const specificWeatherDiv = document.createElement('div');
+                                            specificWeatherDiv.setAttribute('id','specificWeatherDiv');
+
+                                            $("#popUpDiv").append(specificWeatherDiv);
+
+                                            let weatherType = result['list'][0]["weather"][0]["main"];
+
+                                            let weatherDescription = result['list'][0]["weather"][0]["description"];
+
+                                            let weatherIcon = result['list'][0]["weather"][0]["icon"];
+
+                                            let cloudiness = result['list'][0]["clouds"]["all"];
+
+                                            let visibility = result['list'][0]["visibility"];
+
+                                            let precipitation = result['list'][0]["pop"]
+
+                                            // let timeOfDay = result['list'][0]["sys"]['pod']
+
+                                            result['list'][0]["sys"]['pod'] === 'd' ? timeOfDay = "Day" : timeOfDay = "Night";
+
+
+                                            
+                                            const specificWeatherText = document.createElement('p');
+                                            specificWeatherText.setAttribute('id','specificWeatherText');
+                                            
+                                            specificWeatherText.innerHTML = (`The weather is <b>${weatherType}</b><br><br>More specifically <b>${weatherDescription}</b> <img src = https://openweathermap.org/img/wn/${weatherIcon}@2x.png alt="Weather Icon"><br><br>and at this time it is <b><i>${timeOfDay}</i></b><br><br><br>Additionally there is <b>${cloudiness}%</b> of cloudiness.<br><br></br>When it comes to vision, we can see clearly up to <b>${visibility} m</b><br><br>The probability of precipitation is <b>${precipitation}%</b>`)
+
+                                            
+
+                                            specificWeatherDiv.append(specificWeatherText);
+
+                                            const specificWeatherBackButton = document.createElement('button');
+                                            specificWeatherBackButton.setAttribute('id','specificWeatherBackButton');
+                                            specificWeatherBackButton.innerHTML = 'Specific Weather Back';
+
+                                            specificWeatherDiv.append(specificWeatherBackButton);
+
+
+
+                                        }
+
+                                        specificWeatherBackButton.onclick = function(){
+
+                                            $("#specificWeatherDiv").hide();
+                                            $("#weatherInfoDiv").show();
+
+                                        }
+
 
 
                                     }
+
+                                    // * Wind Info Button
+
+                                    windInfoButton.onclick = function(){
+                                        
+                                        $("#weatherInfoDiv").hide();
+
+                                        if(document.getElementById('windInfoDiv')){
+
+                                            $("#windInfoDiv").show();
+                                        
+                                        } else {
+
+                                            const windInfoDiv = document.createElement('div');
+                                            windInfoDiv.setAttribute('id','windInfoDiv');
+
+                                            $("#popUpDiv").append(windInfoDiv);
+
+                                            let windSpeed = result['list'][0]['wind']['speed'];
+
+                                            let windDirection = result['list'][0]['wind']['deg'];
+
+                                            let windGust = result['list'][0]['wind']['gust']
+
+                                            const windInfoText = document.createElement('p');
+                                            windInfoText.setAttribute('id','windInfoText');
+
+                                            windInfoText.innerHTML = (`<h5>The wind is blowing at the speed of <b>${windSpeed} meter/sec</b>,<br> in the direction of <b>${windDirection} degrees</b><br> with the gust of <b>${windGust} meter/sec</b></h5>`);
+
+                                            windInfoDiv.append(windInfoText);
+
+                                            const windInfoBackButton = document.createElement('button');
+                                            windInfoBackButton.setAttribute('id','windInfoBackButton');
+                                            windInfoBackButton.innerHTML = 'Wind Info Back';
+
+                                            windInfoDiv.append(windInfoBackButton);
+
+                                        }
+
+                                        windInfoBackButton.onclick = function(){
+
+                                            $("#windInfoDiv").hide();
+                                            $("#weatherInfoDiv").show();
+                                        }
+
+
+
+                                        
+                                    }
+                                    
+                                    //   * Weather Info Back Button
+
+                                    weatherInfoBackButton.onclick = function(){
+
+                                        $("#weatherInfoDiv").hide();
+                                        $("#forecastDiv").show();
+
+
+                                    }
+
                                 }
-                                
-                                //   * Weather Info Back Button
-
-                                weatherInfoBackButton.onclick = function(){
-
-                                    $("#weatherInfoDiv").hide();
-                                    $("#mainMenuDiv").show();
-
-
                                 }
-
                             }
 
-                        }
+                            }
 
                     },
 
@@ -959,15 +1276,40 @@ $(document).ready(function(){
                         
                         }
 
-
-
-
-
-
-
-
-
                 })
+
+                function unixTimeConverter(unixTimestamp){
+
+                    console.log(`Unix Timestamp is: ${unixTimestamp}`)
+                    
+                    var JSdate = new Date(unixTimestamp);
+                    
+                    console.log(`JS DATE is: ${JSdate}`)
+
+
+
+
+                    // Generate date string
+                    // console.log(JSdate.toLocaleDateString("en-US"));   // Prints: 5/6/2022
+                    // console.log(JSdate.toLocaleDateString("en-GB"));   // Prints: 06/05/2022
+                    // console.log(JSdate.toLocaleDateString("default")); // Prints: 5/6/2022
+                    
+                    // Generate time string
+                    // console.log(JSdate.toLocaleTimeString("en-US"));   // Prints: 1:10:34 PM
+                    // console.log(JSdate.toLocaleTimeString("it-IT"));   // Prints: 13:10:34
+                    // console.log(JSdate.toLocaleTimeString("default")); // Prints: 1:10:34 PM
+
+                    const date = JSdate.toLocaleDateString("en-GB");
+                    const cleanDate = date.replace('/','-');
+
+                    const time = JSdate.toLocaleTimeString("it-IT");
+
+                    return (date + " " + time);
+                    
+
+                }
+
+
             }
 
             
