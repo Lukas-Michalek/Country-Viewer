@@ -15,6 +15,8 @@ $(document).ready(function(){
 
         console.log("Loading CountryBorders.geo.json...");
 
+     
+
         $.ajax({
 
             type: "GET",
@@ -69,8 +71,8 @@ $(document).ready(function(){
     
 
         // Shows current coordinates
-        $("#curentCoordinates").append("<b>Latitude: " + position.coords.latitude + 
-        "<br>Longitude: " + position.coords.longitude + "</b>"); 
+        // $("#curentCoordinates").append("<b>Latitude: " + position.coords.latitude + 
+        // "<br>Longitude: " + position.coords.longitude + "</b>"); 
 
 
         // Initializing Leaflet Map based on User Current Area
@@ -116,7 +118,6 @@ $(document).ready(function(){
 
 
         // Add country borders
-        // *This was working!
         
         L.geoJSON(worldCountries,
             {           
@@ -818,11 +819,164 @@ $(document).ready(function(){
 
                 })
               }
+
+            weatherInfoButton.onclick = function() {
+                
+                console.log("weather Button Clicked!");
+
+
+                let lat = parseFloat(document.getElementById("lattitude").innerHTML);
+                let long = parseFloat(document.getElementById("longitude").innerHTML);
+
+
+                console.log(`Current Lattitude is: ${lat}`);
+                console.log(`Current Longitude is: ${long}`);
+                
+                $.ajax({
+                    
+                    url: 'php/openWeatherApi.php',
+                    type: 'POST',
+                    dataType: 'json',
+
+                    data: {
+
+                        lat: lat,
+                        lon: long,
+                    },
+
+                    success: function(result){
+
+                        
+                        if(result.status.name == "ok"){
+                        
+                            alert("API WEATHER DATA RECEIVED!");
+
+                            // console.log("The result from openWeatherApi request is: " + (JSON.stringify(result)));
+
+
+                            $("#mainMenuDiv").hide();
+
+                            // * Initialize Weather Main Menu Info Div
+
+                            if(document.getElementById('weatherInfoDiv')){
+
+                                $("#weatherInfoDiv").show();
+
+                                console.log(`weatherInfoDiv exist!`);
+                            
+                            } else{
+
+                                console.log(`weatherInfoDiv DOES NOT exist!`);
+
+                                const weatherInfoDiv = document.createElement("div");
+                                weatherInfoDiv.setAttribute('id','weatherInfoDiv');
+
+                                const weatherInfoDivText = document.createElement('p');
+                                weatherInfoDivText.setAttribute('id','weatherInfoDivText');
+                                
+                                weatherInfoDiv.append(weatherInfoDivText);
+
+
+                                console.log(`city is: ${result['city']['name']}`);
+
+                                weatherInfoDivText.innerHTML = (`<p>You are viewing weather for <b>${result['city']['name']}</b></p>`);
+
+
+                                const weatherInfoBackButton = document.createElement("button");
+                                weatherInfoBackButton.setAttribute('id','weatherInfoBackButton');
+                                weatherInfoBackButton.innerHTML = 'Weather Info Back'
+                                
+                                weatherInfoDiv.append(weatherInfoBackButton);
+                                
+                               
+                                popUpDiv.append(weatherInfoDiv);
+
+                                // * Current Weather
+
+                                const currentWeatherButton = document.createElement("button");
+                                currentWeatherButton.setAttribute('id','currentWeatherButton');
+                                currentWeatherButton.innerHTML = 'Current Weather';
+
+                                weatherInfoDiv.append(currentWeatherButton);
+
+
+                                // * Current Weather Button
+                                
+                                currentWeatherButton.onclick = function(){
+
+                                    $("#weatherInfoDiv").hide();
+
+                                    if(document.getElementById('currentWeatherDiv')){
+
+                                        $("#currentWeatherDiv").show();
+                                    
+                                    } else{
+
+                                        const currentWeatherDiv = document.createElement('div');
+                                        currentWeatherDiv.setAttribute('id','currentWeatherDiv');
+                                        
+                                        $("#popUpDiv").append(currentWeatherDiv);
+
+
+
+                                        const currentWeatherBackButton = document.createElement("button");
+                                        currentWeatherBackButton.setAttribute('id','currentWeatherBackButton');
+                                        currentWeatherBackButton.innerHTML = 'Current Weather Back Button';
+                                        
+                                        currentWeatherDiv.append(currentWeatherBackButton)
+
+
+
+                                    } 
+
+                                    currentWeatherDiv.onclick = function(){
+
+                                        $("#currentWeatherDiv").hide();
+                                        $("#weatherInfoDiv").show();
+
+
+                                    }
+                                }
+                                
+                                //   * Weather Info Back Button
+
+                                weatherInfoBackButton.onclick = function(){
+
+                                    $("#weatherInfoDiv").hide();
+                                    $("#mainMenuDiv").show();
+
+
+                                }
+
+                            }
+
+                        }
+
+                    },
+
+                    error: function(jqXHR, textStatus, errorThrown){
+                        console.log("The Wrather Api data have not been sent");
+                        
+                        }
+
+
+
+
+
+
+
+
+
+                })
+            }
+
+            
            
             layer.on({
                 mouseover : highlightFeature,
                 mouseout: resetHighlight,
                 click: zoomToFeature,
+                click: getCoords
                
                 })
                 .bindPopup(popUpDiv)
@@ -875,11 +1029,14 @@ $(document).ready(function(){
             // L.marker(e.latlng).addTo(map);
 
 
-            $("#curentCoordinates").empty();
-            $("#curentCoordinates").append("<b>Latitude: " + lat + 
-            "<br>Longitude: " + long + "</b>"); 
+            // $("#curentCoordinates").empty();
+            $("#lattitude").html(lat);
+            $("#longitude").html(long);
 
-           
+
+            // $("#curentCoordinates").append("<b>Latitude: " + lat + 
+            // "<br>Longitude: " + long + "</b>"); 
+
 
         }
 
@@ -903,11 +1060,42 @@ $(document).ready(function(){
         var obj = $("#countryList").find("option[value='" + userValue + "']");
 
         if(obj != null && obj.length > 0){
-            alert("valid");  // allow form submission
-            console.log("Form was submited");
-            let countryCode = $("#countryName").val();
-           
-            console.log("Country Code is: " + countryCode);
+            console.log("valid country");  // allow form submission
+            // let countryCode = $("#countryName").val();
+
+
+            $.ajax({
+                url: 'php/restCountries.php',
+                type: 'POST',
+                dataType: 'json',
+
+                data:{
+                    cca3: userValue
+                },
+
+                success: function(result){
+                    
+                    console.log("Form Submitted, Data from PHP received")
+
+                    let latitude = result["latlng"][0];
+                    let longitude = result["latlng"][1];
+
+                    console.log(`Latitude for ${$("#countryList option[value=" + userValue + "]").text()} is ${latitude}`);
+
+                    console.log(`Longitude for ${$("#countryList option[value=" + userValue + "]").text()} is ${longitude}`);
+
+                //    *********** TO BE FINSIHED!! *** CURRENTLY I AM GETTING LAT AND LONG FROM SELECTED COUNTRY ******
+
+                },
+
+                error: function(jqXHR, textStatus, errorThrown){
+                    alert("Not sent!")
+                }
+            })
+
+ 
+                 
+            
             
         }
         
