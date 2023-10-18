@@ -1,3 +1,9 @@
+body {
+
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+
 #preloader {
     position: fixed;
     top: 0;
@@ -24,12 +30,15 @@
     animation: animate-preloader 1s linear infinite;
 }
 
+
 #map { 
-    height: 90vh;
+    height: 90vh; 
     width: 100vw;
     }
+    
 
-header {
+
+.headerClass {
     height: 10vh;
     width: 100vw;
     border:  blue 3px solid;
@@ -40,9 +49,14 @@ header {
 
 }
 
-/* #initial-location {
-    position: absolute;
-} */
+
+#coordinates {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+
 
 @-webkit-keyframes animate-preloader {
     

@@ -12,14 +12,876 @@
 
     <link href="favicon.png" rel="icon" sizes="512x512">
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/styles.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet" type="text/css" >
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" >
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
     crossorigin=""/>
+
+<style>
+
+    
+/* LEAFLET STYLES */
+
+
+
+
+.leaflet-popup {
+
+    padding:0px; 
+    margin:0px;
+    /* border: darkblue 3px dashed; */
+    width: 80vw;
+    height: 80vh;
+    display: flex;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.leaflet-popup-content-wrapper {
+
+    padding:0px; 
+    margin:0px;
+    /* border: 3px yellow solid; */
+    border-radius: 0;
+
+    width: 100%;
+    height: 100%;
+    display: flex;
+    /* background-color:  #73C2FB; */
+    /* background-color: #F5E9FE; */
+    background-color: #deb7fc;
+
+
+    
+}
+
+.leaflet-popup-content {
+
+    /* position: relative; */
+    padding:0px; 
+    margin:0px;
+    /* border: red solid 3px;  */
+    width: 80vw;
+    height: 80vh;
+    display: flex;
+
+}
+
+#popUpDiv {
+    padding:0px; 
+    margin:0px;
+    /* border: black dotted 3px; */
+    width: 80vw;
+    height: 80vh;
+    display: flex;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+
+
+}
+
+.leaflet-popup-tip {
+
+    display: none;
+}
+
+.mainMenuDivClass {
+
+    border:#E62C03 solid 5px;
+    /* border-radius: 20px; */
+    width: 80vw;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 5%;
+
+
+}
+
+.mainMenuBackButtonDivClass {
+
+    display: flex;
+    justify-content: center;
+}
+
+.mainMenuBackButtonClass {
+
+margin: 3% 0;
+/* padding: 15px 30px; */
+text-align: center;
+/* text-transform: uppercase; */
+transition: 0.5s;
+background-size: 200% auto;
+color: white;
+border-radius: 10px;
+display: block;
+border: 0px;
+font-weight: 700;
+box-shadow: 0px 0px 14px -7px #f09819;
+    background-image: linear-gradient(45deg, #FF512F 0%, #F09819  51%, #2E60FF  100%);
+cursor: pointer;
+user-select: none;
+-webkit-user-select: none;
+touch-action: manipulation;
+width: 20%;
+font-size: 200%;
+width: 30%;
+
+
+
+}
+
+.mainMenuBackButtonClass:hover {
+background-position: right center;
+/* change the direction of the change here */
+color: #fff;
+text-decoration: none;
+}
+
+.mainMenuBackButtonClass:active {
+transform: scale(0.95);
+}
+
+/* GENERAL INFO DIVS */
+.generalInfoSubDiv {
+
+    border: 5px red solid;
+    width: 80vw;
+    height: 80vh;
+    padding: 5%;
+    font-size: 150%;
+    overflow: auto;
+
+}
+
+.generalInfoSubDivBackButtonDiv {
+    display: flex;
+    justify-content: center;
+    margin: 5% 0 0 0;
+
+}
+
+.generalInfoSubDivBackButton  {
+
+margin: 3% 0;
+/* padding: 15px 30px; */
+text-align: center;
+/* text-transform: uppercase; */
+transition: 0.5s;
+background-size: 200% auto;
+color: white;
+border-radius: 10px;
+display: block;
+border: 0px;
+font-weight: 700;
+box-shadow: 0px 0px 14px -7px #f09819;
+    background-image: linear-gradient(45deg, #FF512F 0%, #F09819  51%, #2E60FF  100%);
+cursor: pointer;
+user-select: none;
+-webkit-user-select: none;
+touch-action: manipulation;
+width: 20%;
+font-size: 150%;
+width: 50%;
+
+
+
+}
+
+.generalInfoSubDivBackButton:hover {
+background-position: right center;
+/* change the direction of the change here */
+color: #fff;
+text-decoration: none;
+}
+
+.generalInfoSubDivBackButton:active {
+transform: scale(0.95);
+}
+
+#utcInfoButton {
+  --b: 3px;   /* border thickness */
+  --s: .45em; /* size of the corner */
+  --color: #373B44;
+  
+  padding: calc(.5em + var(--s)) calc(.9em + var(--s));
+  color: var(--color);
+  --_p: var(--s);
+  background:
+    conic-gradient(from 90deg at var(--b) var(--b),#0000 90deg,var(--color) 0)
+    var(--_p) var(--_p)/calc(100% - var(--b) - 2*var(--_p)) calc(100% - var(--b) - 2*var(--_p));
+  transition: .3s linear, color 0s, background-color 0s;
+  outline: var(--b) solid #0000;
+  outline-offset: .6em;
+  font-size: 16px;
+
+  border: 0;
+
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+#utcInfoButton:hover,
+#utcInfoButton:focus-visible{
+  --_p: 0px;
+  outline-color: var(--color);
+  outline-offset: .05em;
+}
+
+#utcInfoButton:active {
+  background: var(--color);
+  color: #fff;
+}
+
+.flagPictureDivClass {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    
+    
+}
+
+#flagPictureImgDiv {
+    margin: 2% 0 0 0;
+    height: 100%;
+    
+}
+
+#coatOfArmsDiv {
+
+    display: flex;
+    flex-direction: column;
+    /* gap: 5%; */
+    justify-content: center;
+    align-items: center;
+}
+
+#coatOfArmsNameDiv,
+#flagPictureNameDiv {
+
+    margin: 3% 0;
+}
+
+
+.flagContainerClass {
+
+    display: flex;
+    gap: 10%;
+    justify-content: space-around;
+}
+
+/* #flagPictureImgDiv{
+
+    width: 200%;
+    height: 100%;
+} */
+
+
+/* * STYLES FROM FORECAST */
+
+.forecastOverviewDivClass {
+
+
+/* width: 100%; */
+width: 80vw;
+height: 80vh;   
+overflow: auto;
+padding: 3%;
+/* border: gray 4px dashed; */
+
+
+/* background-color:  #73C2FB; */
+/* background-color: #F5E9FE; */
+background-color: #deb7fc;
+
+}
+
+
+
+#forecastDiv {
+
+
+}
+
+#weatherInfoDiv {
+
+/* border: green 5px solid; */
+}
+
+
+.forecastDayHeaderDivClass{
+
+display: flex;
+
+/* border: 3px dotted yellow; */
+}
+
+#minNightTempValue,
+#maxDayTempValue {
+
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
+
+.tempSwitchDivClass{
+
+display:flex;
+align-items: center;
+justify-content: center;
+
+}
+
+.tempSwitchDivClass p{
+font-size: 3.5em;
+font-weight: bold;
+padding: 5px;
+margin: 0;
+}
+
+.weatherButtonsDivClass{
+
+vertical-align: middle;
+text-align: center;
+justify-content: center;
+padding: 4.3vh 0 0 0;
+justify-content: center;
+
+}
+
+.firstDayDivClass,
+.secondDayDivClass,
+.thirdDayDivClass,
+.fourthDayDivClass,
+.fifthDayDivClass {
+
+padding: 2%;
+height: 80vh;
+width:100vw;
+/* background-color:  #73C2FB; */
+background-color: #deb7fc;
+overflow: auto;
+}
+
+
+
+.weatherButtonsDivClass button {
+
+
+color: #F8F8FF;
+border: none;
+
+background-color:transparent;
+text-align: center;
+vertical-align: middle;
+justify-content: center;
+font-weight: bold;
+font-size:larger;
+
+}
+
+.weatherButtonsDivClass button:focus{
+color: black;
+outline: none; 
+
+}
+
+.weatherButtonsDivClass button:hover {
+transition: 0.3s;
+color:black;
+cursor:pointer;
+}
+
+
+.weatherButtonsDivClass button:not(:last-child) {
+border-right: grey 1px solid;
+}
+
+
+
+.tempWindPrecButtonsDivClass button{
+
+color: gray;
+border: none;
+
+background-color:transparent;
+text-align: center;
+vertical-align: middle;
+justify-content: center;
+
+font-size:larger;
+
+}
+
+.tempWindPrecButtonsDivClass button:hover {
+transition: 0.3s;
+color:black;
+cursor:pointer;
+}
+
+.tempWindPrecButtonsDivClass button:not(:last-child) {
+border-right: grey 1px solid;
+}
+
+
+.tempWindPrecButtonsDivClass button:focus{
+color: black;
+outline: none; 
+
+}
+
+
+.forecastDayUpperPartDivClass{
+
+display: flex;
+justify-content: space-between;
+
+}
+
+.fullWeatherInfofirstDayDiv,
+.fullWeatherInfosecondDayDiv,
+.fullWeatherInfothirdDayDiv,
+.fullWeatherInfofourthDayDiv,
+.fullWeatherInfofifthDayDiv {
+
+display: flex;
+
+
+}
+
+.fullWeatherInfofirstDayDiv > * {
+
+display: flex;
+flex-direction: column;
+gap:0;
+align-items: center;
+}
+
+.fullWeatherInfosecondDayDiv > * {
+
+display: flex;
+flex-direction: column;
+gap:0;
+align-items: center;
+}
+
+.fullWeatherInfothirdDayDiv > * {
+
+display: flex;
+flex-direction: column;
+gap:0;
+align-items: center;
+}
+
+.fullWeatherInfofourthDayDiv > * {
+
+display: flex;
+flex-direction: column;
+gap:0;
+align-items: center;
+}
+
+.fullWeatherInfofifthDayDiv > * {
+display: flex;
+flex-direction: column;
+gap:0;
+align-items: center;
+}
+
+.tempWindPrecButtonsDivClass {
+
+margin: 10% 0 10% 0
+}
+
+.forecastDivClass {
+
+display: flex;
+flex-direction: row;
+margin: 3%;
+gap: 3%;
+
+}
+
+
+
+.dailyForecastThumbDivClass {
+display:flex;
+flex-direction: column;
+border: #236ccb  2px solid;
+border-radius: .5rem;
+
+}
+
+.forecastDayBackButtonClass,
+.forecastMainMenuBackButtonClass
+{
+margin: 5% 0 0 0;
+background-color: initial;
+background-image: linear-gradient(-180deg, #FF7E31, #E62C03);
+border-radius: 6px;
+box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px;
+color: #FFFFFF;
+cursor: pointer;
+display: inline-block;
+font-family: Inter,-apple-system,system-ui,Roboto,"Helvetica Neue",Arial,sans-serif;
+height: 7vh;
+line-height: 5vh;
+outline: 0;
+overflow: hidden;
+padding: 0;
+pointer-events: auto;
+position: relative;
+text-align: center;
+touch-action: manipulation;
+user-select: none;
+-webkit-user-select: none;
+vertical-align: top;
+white-space: nowrap;
+width: 100%;
+z-index: 9;
+border: 0;
+transition: box-shadow .2s;
+align-self: center;
+display: flex;
+justify-content: center;
+align-items: center;
+font-size: 150%;
+}
+
+.forecastDayBackButtonClass:hover {
+background-image: linear-gradient(-180deg, #E62C03 0%,  #FF7E31 100%);
+}
+
+
+.dayPartDivClass {
+
+border-right: #236ccb  2px solid;
+}
+
+.nightPartDivClass {
+
+display: flex;
+flex-direction: column;
+}
+
+
+.thumbImgClass {
+
+width: 100%;
+height: 100%;
+border-bottom: #236ccb  2px solid;
+
+}
+
+
+.thumbWeatherDivClass {
+
+display: flex;
+flex-direction: row;
+
+
+}
+
+.thumbWeatherDivClass > * {
+
+display: flex;
+flex-direction: row;
+text-align: center;
+
+}
+
+
+
+.dayPartDivClass,
+.nightPartDivClass {
+
+display: flex;
+flex-direction: column;
+/* border: green 2px solid; */
+}
+
+
+
+
+.dayButtonClass {
+background-image: linear-gradient(-180deg, #37AEE2 0%, #1E96C8 100%);
+border-radius: .35rem;
+box-sizing: border-box;
+color: #FFFFFF;
+display: flex;
+font-size: 1.1rem;
+justify-content: center;
+padding: 1rem 1.75rem;
+text-decoration: none;
+width: 100%;
+border: 0;
+cursor: pointer;
+user-select: none;
+-webkit-user-select: none;
+touch-action: manipulation;
+}
+
+.dayButtonClass:hover {
+background-image: linear-gradient(-180deg, #1D95C9 0%, #17759C 100%);
+}
+
+@media (min-width: 768px) {
+.dayButtonClass {
+padding: 1rem 2rem;
+}
+}
+
+
+
+.forecastOverviewHeadingDivClass {
+
+text-align: center;
+
+}
+
+.overviewTempSwitchDivClass {
+
+display: flex;
+justify-content: center;
+flex-direction: row;
+gap: 5%;
+
+text-align: center;
+
+}
+
+/* ******** */
+
+
+.mainMenuButtonsDivClass {
+
+    display: flex;
+    flex-direction: row;
+    justify-content:space-around;
+    gap: 10%;
+
+}
+
+.mainMenuButtonClass {
+
+    width: 30vw;
+    height: 15vh;
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+    transition: 0.5s;
+    background-size: 200% auto;
+    border: 0px;
+    font-weight: 700;
+    font-size:190%;
+    box-shadow: 0px 0px 14px -7px #f09819;
+    background-image: linear-gradient(45deg, #FF512F 0%, #F09819  51%, #FF512F  100%);
+    cursor: pointer;
+    font-weight: 700;
+
+}
+
+.mainMenuButtonClass:hover {
+background-position: right center;
+/* change the direction of the change here */
+color: #fff;
+text-decoration: none;
+}
+
+.mainMenuButtonClass:active {
+transform: scale(0.95);
+}
+
+
+#generalInfoMenuDiv {
+
+    display: flex;
+    flex-direction: column;
+    width: 80vw;
+    height: 70vh;
+    margin:0;
+    overflow: auto;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+
+}
+
+#generalInfoMenuDiv > * {
+    /* border: 2px yellow solid; */
+    
+}
+
+.generalInfoTextDivClass {
+
+    text-align: center;
+    margin: 3% 0 0 0;
+}
+
+#generalInfoTextHeading {
+
+    font-size: 300%;
+    font-weight: bold;
+
+
+}
+
+#generalInfoText {
+
+    font-size: 150%;
+    font-style: italic;
+    font-weight: bold;
+    margin: 5% 0 0 0;
+
+}
+
+.generalInfoButtonClass {
+
+    width: 15vw;
+    height: 10vh;
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+    transition: 0.75s;
+    background-size: 300% auto;
+    border: 0px;
+    font-weight: 700;
+    font-size:125%;
+    box-shadow: 0px 0px 14px -7px #f09819;
+    background-image: linear-gradient(45deg, #FF512F 0%, #F09819  51%, #2E60FF  100%);
+    cursor: pointer;
+    font-weight: 700;
+
+
+
+}
+
+.generalInfoButtonClass:hover {
+background-position: right center;
+/* change the direction of the change here */
+color: #fff;
+text-decoration: none;
+}
+
+.generalInfoButtonClass:active {
+transform: scale(0.95);
+}
+
+
+
+
+.generalInfoButtonsDivClass{
+
+  
+    margin: 5%;
+    /* padding: 5%; */
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 5%;
+    border: #FF512F double 7px;
+    border-radius: 25px;
+    padding: 4%;
+
+
+}
+
+.generalInfoButtonsDivClass > * {
+
+    margin: 2%;
+} 
+
+
+
+
+
+.weatherWidgetDivClass {
+
+    font-size: 150%;
+    /* border: 1px black solid; */
+    align-items: center;
+    justify-content: center;
+    
+}
+
+
+
+.mainMenuTextDivClass{
+
+    font-weight: bold;
+    font-size: 200%;
+} 
+
+/* COLORS:
+BACKGROUND: #F5E9FE
+FONT: #D08BFF
+
+*/
+
+
+.overviewTempButtonClass
+{
+margin: 10px;
+padding: 15px 30px;
+text-align: center;
+text-transform: uppercase;
+transition: 0.5s;
+background-size: 200% auto;
+color: white;
+border-radius: 10px;
+display: block;
+border: 0px;
+font-weight: 700;
+box-shadow: 0px 0px 14px -7px #f09819;
+background-image: linear-gradient(45deg, #FF512F 0%, #F09819  51%, #FF512F  100%);
+cursor: pointer;
+user-select: none;
+-webkit-user-select: none;
+touch-action: manipulation;
+width: 20%;
+font-size: 250%;
+
+
+}
+
+.overviewTempButtonClass:hover {
+background-position: right center;
+/* change the direction of the change here */
+color: #fff;
+text-decoration: none;
+}
+
+.overviewTempButtonClass:active {
+transform: scale(0.95);
+}
+
+#overviewTempSwitchHeading {
+
+text-align: center;
+margin: 3%;
+}
+
+.weatherWidgetDivClass > *{
+
+    margin: 0px;
+    padding: 0px;
+}
+
+
+</style>
+
 </head>
 <body>
-    <header>
+    <header class="headerClass">
 
         <!-- <button id="getJson">Get Json!</button> -->
 
@@ -58,7 +920,8 @@
     </header>
     
 
-    <div id="map">
+    <div class="custom-popup" id="map">
+    <div class="content" id="content"></div>
         
     </div>
 
