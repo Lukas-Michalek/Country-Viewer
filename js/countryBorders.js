@@ -3392,9 +3392,9 @@ var worldCountries = {
       "type": "Feature",
       "properties": {
         "name": "N. Cyprus",
-        "iso_a2": "-99",
-        "iso_a3": "-99",
-        "iso_n3": "-99"
+        "iso_a2": "-98",
+        "iso_a3": "-98",
+        "iso_n3": "-98"
       },
       "geometry": {
         "type": "Polygon",
@@ -12186,9 +12186,9 @@ var worldCountries = {
       "type": "Feature",
       "properties": {
         "name": "Kosovo",
-        "iso_a2": "-99",
-        "iso_a3": "-99",
-        "iso_n3": "-99"
+        "iso_a2": "UNK",
+        "iso_a3": "UNK",
+        "iso_n3": "UNK"
       },
       "geometry": {
         "type": "Polygon",
