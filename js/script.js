@@ -85,6 +85,12 @@ $(document).ready(function () {
         '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     }).addTo(map);
 
+
+
+  //   L.control.zoom({
+  //     position: 'bottomright'
+  // }).addTo(map);
+
     // ******************************************************************* //
     // *****        CUSTOM MARKER       ********************************** //
     // ******************************************************************* //
@@ -370,7 +376,7 @@ $(document).ready(function () {
                 mainMenuBackButton.setAttribute("id", "mainMenuBackButton");
                 mainMenuBackButton.setAttribute("class", "mainMenuBackButtonClass");
 
-                mainMenuBackButton.innerHTML = "Main Menu Back";
+                mainMenuBackButton.innerHTML = "Back";
 
                 mainMenuBackButtonDiv.append(mainMenuBackButton);
                 // popUpDiv.append(mainMenuBackButton);
@@ -460,7 +466,7 @@ $(document).ready(function () {
                   );
                   countryNameBackButton.setAttribute('class','generalInfoSubDivBackButton');
                   
-                  countryNameBackButton.innerHTML = "Country Back";
+                  countryNameBackButton.innerHTML = "Back";
 
                   countryNameBackButtonDiv.append(countryNameBackButton);
 
@@ -516,7 +522,7 @@ $(document).ready(function () {
                   const currencyBackButton = document.createElement("button");
                   currencyBackButton.setAttribute("id", "currencyBackButton");
                   currencyBackButton.setAttribute('class','generalInfoSubDivBackButton');
-                  currencyBackButton.innerHTML = "Currency Back Button";
+                  currencyBackButton.innerHTML = "Back";
 
                   currencyBackButtonDiv.append(currencyBackButton);
                 }
@@ -585,7 +591,7 @@ $(document).ready(function () {
                     "capitalCityBackButton"
                   );
                   capitalCityBackButton.setAttribute('class','generalInfoSubDivBackButton')
-                  capitalCityBackButton.innerHTML = "Capital City Back Button";
+                  capitalCityBackButton.innerHTML = "Back";
 
                   capitalCityBackButtonDiv.append(capitalCityBackButton);
                 }
@@ -626,7 +632,7 @@ $(document).ready(function () {
                   const regionBackButton = document.createElement("button");
                   regionBackButton.setAttribute("id", "regionBackButton");
                   regionBackButton.setAttribute('class','generalInfoSubDivBackButton')
-                  regionBackButton.innerHTML = "Region Back Button";
+                  regionBackButton.innerHTML = "Back";
                   regionBackButtonDiv.append(regionBackButton);
                 }
 
@@ -676,7 +682,7 @@ $(document).ready(function () {
                   languagesBackButton.setAttribute("id", "languagesBackButton");
                   languagesBackButton.setAttribute("class", "generalInfoSubDivBackButton");
 
-                  languagesBackButton.innerHTML = "Languages Back Button";
+                  languagesBackButton.innerHTML = "Back";
 
                   languagesBackButtonDiv.append(languagesBackButton);
                 }
@@ -719,7 +725,7 @@ $(document).ready(function () {
                     "populationBackButton"
                   );
                   populationBackButton.setAttribute('class','generalInfoSubDivBackButton');
-                  populationBackButton.innerHTML = "Population Back Button";
+                  populationBackButton.innerHTML = "Back";
 
                   populationBackButtonDiv.append(populationBackButton);
                 }
@@ -770,7 +776,7 @@ $(document).ready(function () {
                   );
                   interestingStuffBackButton.setAttribute('class','generalInfoSubDivBackButton');
                   interestingStuffBackButton.innerHTML =
-                    "Interesting Stuff Back Button";
+                    "Back";
 
                     interestingStuffBackButtonDiv.append(interestingStuffBackButton);
                 }
@@ -826,7 +832,7 @@ $(document).ready(function () {
                   timeZonesBackButton.setAttribute("id", "timeZonesBackButton");
                   timeZonesBackButton.setAttribute("class", "generalInfoSubDivBackButton");
 
-                  timeZonesBackButton.innerHTML = "Time Zones Back Button";
+                  timeZonesBackButton.innerHTML = "Back";
 
                   timeZonesBackButtonDiv.append(timeZonesBackButton);
                 }
@@ -869,7 +875,7 @@ $(document).ready(function () {
                     utcBackButton.setAttribute('class','generalInfoSubDivBackButton');
 
                     
-                    utcBackButton.innerHTML = 'Back to General Information';
+                    utcBackButton.innerHTML = 'Back';
                     utcBackButtonDiv.append(utcBackButton)
 
 
@@ -972,7 +978,7 @@ $(document).ready(function () {
                   const flagsBackButton = document.createElement("button");
                   flagsBackButton.setAttribute("id", "flagsBackButton");
                   flagsBackButton.setAttribute("class", "generalInfoSubDivBackButton"); 
-                  flagsBackButton.innerHTML = "Flags Back Button";
+                  flagsBackButton.innerHTML = "Back";
 
                   flagsBackButtonDiv.append(flagsBackButton);
                 }
@@ -1045,7 +1051,7 @@ $(document).ready(function () {
                     "neighboursBackButton"
                   );
                   neighboursBackButton.setAttribute('class','generalInfoSubDivBackButton');
-                  neighboursBackButton.innerHTML = "Neighbours Back Button";
+                  neighboursBackButton.innerHTML = "Back";
 
                   neighboursBackButtonDiv.append(neighboursBackButton);
                 }
@@ -1137,8 +1143,13 @@ $(document).ready(function () {
                   "forecastOverviewHeadingText"
                 );
                 forecastOverviewHeadingText.innerHTML =
-                  "<b>Welcome to 5-Days Forecast Overview.</b><br><br>For more specific Info please pick a corresponding day";
+                  "<b>Welcome to 5-Days Forecast Overview.</b>";
                 forecastOverviewHeadingDiv.append(forecastOverviewHeadingText);
+
+                const forecastOverviewHeadingTextSpan = document.createElement('p');
+                forecastOverviewHeadingTextSpan.setAttribute('id','forecastOverviewHeadingTextSpan');
+                forecastOverviewHeadingTextSpan.innerHTML = "For more specific Info please pick a corresponding day";
+                forecastOverviewHeadingDiv.append(forecastOverviewHeadingTextSpan);
 
                 // * Forecast Div holding Day buttons
                 const forecastDiv = document.createElement("div");
@@ -1207,7 +1218,7 @@ $(document).ready(function () {
                 const forecastMainMenuBackButton = document.createElement('button');
                 forecastMainMenuBackButton.setAttribute('id','forecastMainMenuBackButton');
                 forecastMainMenuBackButton.setAttribute('class','forecastMainMenuBackButtonClass');
-                forecastMainMenuBackButton.innerHTML = `<b>Back to Main Menu</b>`;
+                forecastMainMenuBackButton.innerHTML = `<b>Back</b>`;
                 forecastMainMenuBackButtonDiv.append(forecastMainMenuBackButton);
 
 
@@ -1513,17 +1524,7 @@ $(document).ready(function () {
                   );
                   forecastDiv.append(forecastDayUpperPartDiv);
 
-                  // * General Weather Info Div
-                  const generalWeatherInfoDiv = document.createElement("div");
-                  generalWeatherInfoDiv.setAttribute(
-                    "id",
-                    "generalWeatherInfoDiv"
-                  );
-                  generalWeatherInfoDiv.setAttribute(
-                    "class",
-                    "generalWeatherInfoDivClass"
-                  );
-                  forecastDayUpperPartDiv.append(generalWeatherInfoDiv);
+                  
 
                   // * Weather Description and DAte + Time
                   const weatherDescriptionDiv = document.createElement("div");
@@ -1537,6 +1538,18 @@ $(document).ready(function () {
                   );
                   forecastDayUpperPartDiv.append(weatherDescriptionDiv);
 
+                  // * General Weather Info Div
+                  const generalWeatherInfoDiv = document.createElement("div");
+                  generalWeatherInfoDiv.setAttribute(
+                    "id",
+                    "generalWeatherInfoDiv"
+                  );
+                  generalWeatherInfoDiv.setAttribute(
+                    "class",
+                    "generalWeatherInfoDivClass"
+                  );
+                  forecastDayUpperPartDiv.append(generalWeatherInfoDiv);
+
                   // * Full Weather Info
                   const fullWeatherInfoDiv = document.createElement("div");
                   fullWeatherInfoDiv.setAttribute(
@@ -1545,7 +1558,8 @@ $(document).ready(function () {
                   );
                   fullWeatherInfoDiv.setAttribute(
                     "class",
-                    `fullWeatherInfo${divName}`
+                    // `fullWeatherInfo${divName}`
+                    'fullWeatherInfoDay'
                   );
                   forecastDiv.append(fullWeatherInfoDiv);
 
@@ -1790,7 +1804,7 @@ $(document).ready(function () {
                     "class",
                     "forecastDayBackButtonClass"
                   );
-                  forecastDayBackButton.innerHTML = `<b>Back to Weather Overview</b>`;
+                  forecastDayBackButton.innerHTML = `<b>Back</b>`;
                   forecastDiv.append(forecastDayBackButton);
 
                   // const firstDayBackButton = document.createElement('button');
