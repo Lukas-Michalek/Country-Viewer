@@ -30,10 +30,7 @@
     
 /* LEAFLET STYLES */
 
-.leaflet-control-container { 
-    position: absolute; 
-    right: 56px 
-} 
+
 
 
 .leaflet-popup {
@@ -51,14 +48,11 @@
 
     padding:0px; 
     margin:0px;
-    /* border: 3px yellow solid; */
     border-radius: 0;
 
     width: 100%;
     height: 100%;
     display: flex;
-    /* background-color:  #73C2FB; */
-    /* background-color: #F5E9FE; */
     background-color: #deb7fc;
 
 
@@ -67,20 +61,19 @@
 
 .leaflet-popup-content {
 
-    /* position: relative; */
     padding:0px; 
     margin:0px;
-    /* border: red solid 3px;  */
     width: 80vw;
     height: 80vh;
     display: flex;
 
 }
 
+/* DEFAULT */
 #popUpDiv {
     padding:0px; 
     margin:0px;
-    /* border: black dotted 3px; */
+    border: #FF512F double 7px;
     width: 80vw;
     height: 80vh;
     display: flex;
@@ -89,30 +82,37 @@
 
 }
 
+/* DEFAULT */
 .leaflet-popup-tip {
 
     display: none;
 }
 
+
+
+
+/* DEFAULT */
 .mainMenuDivClass {
 
-    border:#E62C03 solid 5px;
-    /* border-radius: 20px; */
     width: 80vw;
     height: 80vh;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-around;
+    align-items: space-between;
 
    
     flex-direction: column;
     align-items: center;
     justify-content: center;
 
-    gap: 5%;
+    gap: 15%;
 
 
 }
+
+
+
+
 
 .mainMenuBackButtonDivClass {
 
@@ -161,9 +161,9 @@ transform: scale(0.95);
 /* GENERAL INFO DIVS */
 .generalInfoSubDiv {
 
-    border: 5px red solid;
+    /* border: 5px red solid; */
     width: 80vw;
-    height: 80vh;
+    height: 75vh;
     padding: 5%;
     font-size: 150%;
     overflow: auto;
@@ -318,22 +318,12 @@ background-color: #deb7fc;
 
 
 
-#forecastDiv {
-
-
-}
-
-#weatherInfoDiv {
-
-/* border: green 5px solid; */
-}
 
 
 .forecastDayHeaderDivClass{
 
 display: flex;
 
-/* border: 3px dotted yellow; */
 }
 
 #minNightTempValue,
@@ -675,7 +665,7 @@ text-align: center;
 
 /* ******** */
 
-
+/* GENERAL */
 .mainMenuButtonsDivClass {
 
     display: flex;
@@ -685,6 +675,7 @@ text-align: center;
 
 }
 
+/* GENERAL */
 .mainMenuButtonClass {
 
     width: 30vw;
@@ -715,7 +706,7 @@ text-decoration: none;
 transform: scale(0.95);
 }
 
-
+/* GENERAL */
 #generalInfoMenuDiv {
 
     display: flex;
@@ -831,7 +822,7 @@ transform: scale(0.95);
 }
 
 
-
+/* GENERAL */
 .mainMenuTextDivClass{
 
     font-weight: bold;
@@ -895,13 +886,261 @@ margin: 3%;
 
 /* MEDIA QUERIES */
 
+/* LAPTOP + */
+
+@media only screen and (min-width: 769px){
+        
+
+.headerClass {
+
+    background-color: #DEB7FC;
+    height: 10vh;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+
+
+#map{
+    height: 90vh;
+}
+
+#countryList-submitBtn {
+
+    background-color: #DEB7FC;
+    border: none;
+    
+}
+
+
+#formAndCoordinatesDiv {
+
+    display: flex;
+    flex-direction: row;
+    gap: 100px;
+}
+
+
+#countryForm {
+
+    display: flex;
+    flex-direction: row;
+
+}
+
+#greeting {
+
+    font-weight: bold;
+    font-size: 150%;
+    text-align: center;
+    margin:0;
+    padding: 0;
+}
+
+#greeting p{
+
+    margin:0;
+    padding: 0;
+
+}
+
+
+
+#coordinates h4{
+    margin:0;
+    padding: 0;
+}
+
+#curentCoordinates {
+
+    display: flex;
+    gap: 10%;
+    font-weight: bold;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+#generalInfoTextHeading {
+
+    font-size: 250%;
+}
+
+
+
+}
+
+
+/* *********************************************************************** */
+/* *********************************************************************** */
+/* *********************************************************************** */
+/* ***--------------------------------------------------------*********** */
+/* ***--------------------------------------------------------*********** */
+/* ***--------------------------------------------------------*********** */
+/* ***************llllllllllllll****************************************** */
+/* ***************llllllllllllll****************************************** */
+/* ***************llllllllllllll****************************************** */
+/* ***************llllllllllllll****************************************** */
+/* ***************llllllllllllll****************************************** */
+/* ***************llllllllllllll****************************************** */
+/* ***************llllllllllllll****************************************** */
+/* *********************************************************************** */
+
+
 /* TABLET SCREEN */
 
-@media (min-width: 768px) {
+@media only 
+    screen and (min-width: 426px) and (max-width:768px) {
+
+
+
+
+/* TABLET */
 .dayButtonClass {
 padding: 1rem 2rem;
 }
+
+/* TABLET */
+.headerClass {
+
+    background-color: #DEB7FC;
+    height: 20vh;
+    display: flex;
+    flex-direction: row;
+    /* padding: 10% 0; */
+    justify-content: center;
+    align-items: center;
+    
+    
 }
+
+
+
+
+/* TABLET */
+#countryList-submitBtn {
+
+    background-color: #DEB7FC;
+    border: none;
+
+}
+
+/* TABLET */
+#formAndCoordinatesDiv {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+   /* padding: 0 0 2% 0;
+   gap: 5%; */
+   /* gap: 0 4%; */
+    
+}
+
+
+/* TABLET */
+#greeting {
+
+    font-size: 100%;
+    font-weight: bold;
+
+
+}
+
+#greeting p {
+
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+#coordinates h4 {
+
+    margin: 0;
+    padding: 0;
+
+}
+
+/* TABLET */
+#countryForm {
+
+    /* padding: 0 5% 0 0; */
+
+}
+
+/* TABLET */
+#map {
+
+    height: 80vh;
+
+}
+
+/* TABLET */
+#countryForm {
+
+    display: flex;
+}
+
+/* TABLET */
+#mainMenuTextDiv {
+
+    text-align: center;
+    padding: 0 10%;
+    
+}
+
+#mainMenuText{
+
+    line-height: 150%;
+}
+
+#forecastDiv {
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    justify-content: space-evenly;
+    
+}
+
+#forecastOverviewHeadingTextSpan {
+
+    font-size: 150%;
+}
+
+
+.fullWeatherInfoDay {
+
+    justify-content: space-evenly;
+    gap: 30px;
+    flex-direction: column;
+
+
+}
+
+.fullWeatherInfoDay > * {
+    border:#236ccb dashed 5px;
+    padding: 5%;
+    border: #FF512F double 7px;
+}
+
+}
+
+
+/* *********************************************************************** */
+/* *********************************************************************** */
+/* *********************************************************************** */
+/* *********************************************************************** */
+/* *********************************************************************** */
+/* *********************************************************************** */
+/* *********************************************************************** */
+/* *********************************************************************** */
+/* *********************************************************************** */
+/* *********************************************************************** */
+
+
 
 /* MOBILE SCREEN */
 
@@ -912,20 +1151,23 @@ html {
     width: 100%;
 }
 
+
+/* MOBILE */
 .headerClass {
 
+    width: 100%;
     display: flex;
     flex-direction: column;
     position: sticky;
-    border: 5px blue solid;
-    height: 20vh;
-    width: auto;
+    border: 3px blue solid;
+    height: 10vh;
+    /* width: auto; */
     /* padding: 3%; */
     background-color: #DEB7FC;
     align-items: center;
     justify-content: center;
     margin: 0;
-    padding: 0;
+    padding: 10% 0;
     
 
 }
@@ -939,8 +1181,11 @@ html {
 
 #greeting {
 
+    width: 100%;
     text-align: center;
-    font-weight: 700;
+    font-weight: 400;
+    font-weight: bold;
+    /* padding: 5% 0 0 0; */
 }
 
 
@@ -948,10 +1193,9 @@ html {
 
     display: flex;
     flex-direction: row;
-    /* align-items: stretch; */
-    /* border: 3px green solid; */
+
     justify-content: center;
-    padding: 0;
+    /* padding: 0 0 5% 0; */
     margin: 0;
     flex-shrink: 0;
     align-items: center;
@@ -959,9 +1203,9 @@ html {
 
 #countryName {
 
-    /* width: 100%;
-    height: 200%; */
+    
     display: flex;
+    height: 40%;
     
 }
 
@@ -972,6 +1216,7 @@ html {
     /* background: url('resources/magnifying_glass.png') no-repeat; */
     background-color: #DEB7FC;
     border: none;
+
 
     
     
@@ -992,37 +1237,80 @@ html {
 
 
 }
-
+/* MOBILE */
 #map {
 
-    height: 80vh;
+    height: 90vh;
     width: 100%;
 }
 
+
+/* MOBILE */
 .mainMenuButtonsDivClass {
 
-    display: flex;
+    
     flex-direction: column;
+    justify-content:center;
+    /* gap: 10%; */
+    
+   
+
 
 }
 
-.mainMenuButtonsDivClass > * {
+/* MOBILE */
+#popUpDiv {
 
-   margin: 10%;
+    border: #FF512F double 7px;
+  
+
 }
 
 
+/* MOBILE */
 .mainMenuButtonClass {
 
-    height: 10vh;
-    width: 50vw;
-    font-size: large;
+    /* height: 10vh;
+    width: 50vw; */
+    font-size: medium;
+    padding: 0;
+    margin: 7.5%;
+    width: 40vw;
+    height: 15vh;
+
+
 }
 
-#mainMenuText {
+/* Mobile */
+#mainMenuText{
 
-    margin: 0 10%;
+    /* margin: 0 10%; */
     text-align: center;
+    font-size: 80%;
+    /* text-decoration: underline; */
+    /* padding: 5%; */
+    /* line-height: 120%; */
+    /* display: inline-block; */
+}
+
+.mainMenuTextDivClass{
+
+
+    /* border: yellow 5px solid; */
+    padding: 0 5%;
+    
+}
+
+
+/* MOBILE */
+.mainMenuDivClass {
+
+    /* border: dashed 5px green; */
+    gap:0;
+    align-items: center;
+    justify-content: center;
+        flex-grow: 0.5 1;
+
 }
 
 #generalInfoTextHeading {
@@ -1192,6 +1480,34 @@ html {
 
 }
 
+/* *********************************************************************** */
+/* *********************************************************************** */
+/* *********************************************************************** */
+/* *********************************************************************** */
+/* *********************************************************************** */
+/* *********************************************************************** */
+/* *********************************************************************** */
+/* *********************************************************************** */
+/* *********************************************************************** */
+/* *********************************************************************** */
+
+/* SMALL MOBILE SCREEN */
+
+@media only screen and (max-width: 320px) {
+
+.headerClass {
+
+    
+    padding: 15% 0;
+
+
+}
+}
+
+
+
+
+
 </style>
 
 </head>
@@ -1200,11 +1516,14 @@ html {
 
         <!-- <button id="getJson">Get Json!</button> -->
 
-        <p id="greeting">Welcome to Country Viewer.</p>
+        <div id="greeting">
+            <p >Welcome to Country Viewer.</p>
+        </div>
+        <div id="formAndCoordinatesDiv">
 
-        <form id="countryForm">
+           <form id="countryForm">
             
-            <label>
+            
                 <input 
                     type="text" 
                     list="countryList" 
@@ -1213,7 +1532,7 @@ html {
                     class="form-control"
                     placeholder="Pick a country..."
                     required/>
-            </label>
+            
             
             
             <datalist id="countryList">
@@ -1223,22 +1542,23 @@ html {
             
             <button 
                 type="submit" 
-                class="btn btn-primary" id="countryList-submitBtn"
+                id="countryList-submitBtn"
                 title="Search Button"
                 >
                
                 <img id="searchButtonImg" alt="Magnifying Glass Image" src="resources/magnifying_glass_smaller.png">
             
             </button>
-        </form>
+            </form>
 
 
-        <div id="coordinates">
-            <h4>Current Coordinates:</h4>
-            <div id="curentCoordinates">
-                <div id="lattitude"></div>
+                <div id="coordinates">
+                    <h4>Current Coordinates:</h4>
+                    <div id="curentCoordinates">
+                    <div id="lattitude"></div>
                 <div id="longitude"></div>
             </div>
+        </div>
         </div>
     </header>
     

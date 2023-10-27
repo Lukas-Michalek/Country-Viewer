@@ -85,6 +85,12 @@ $(document).ready(function () {
         '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     }).addTo(map);
 
+    // Positioning if Atribution on Leaflet (map) div
+    map.attributionControl.setPosition('bottomright');
+    
+    // Positioning of Zoom Controls(+,-)
+    map.zoomControl.setPosition('topright');
+
 
 
   //   L.control.zoom({
@@ -163,7 +169,7 @@ $(document).ready(function () {
 
       const mainMenuText = document.createElement("p");
       mainMenuText.setAttribute("id", "mainMenuText");
-      mainMenuText.innerHTML = `What would you like to know about ${feature.properties.name} ?<br><br>`;
+      mainMenuText.innerHTML = `What would you like to know about ${feature.properties.name}?`;
 
       mainMenuTextDiv.append(mainMenuText);
 
@@ -709,8 +715,44 @@ $(document).ready(function () {
                   populationDiv.append(populationTextDiv);
 
 
+                  let popNumber = getCleanerNumber(result["population"]);
+
+                // This method will add commas to make easier to read a large number
+                
+                  function getCleanerNumber(bigNumber){
+
+
+                    let bigNumberString = bigNumber.toString();
+
+                    let numberLength = bigNumberString.length;
+
+                    let switchedIndex = numberLength - 1;
+
+                    let cleanNumber = '';
+                    
+                    for(let i = 0; i < numberLength; i++){
+                       
+                      cleanNumber += bigNumberString[i];
+
+                      if(switchedIndex % 3 === 0 && switchedIndex != 0){
+  
+                        cleanNumber += ',';
+
+                      }
+
+                      switchedIndex -= 1;
+
+                      console.log(`cleanNumber is: ${cleanNumber}`)
+
+                    }
+                    
+                    alert(`cleanNumber is ${cleanNumber}`)
+                    return cleanNumber;
+
+                  }
+
                   $("#populationTextDiv").append(
-                    `<p><h5>The population(according to the latest data) of <b>${feature.properties.name}</b> is:<br><br><br> </h5><h3><b>${result["population"]} inhabitants</b></h3></p>`
+                    `<p><h5>The population(according to the latest data) of <b>${feature.properties.name}</b> is:<br><br><br> </h5><h3><b>${popNumber} inhabitants</b></h3></p>`
                   );
 
 
@@ -1259,6 +1301,8 @@ $(document).ready(function () {
 
                   return date + " " + time;
                 }
+
+
 
                 function getDayNames(firstDay) {
                   var days = [
