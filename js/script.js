@@ -34,11 +34,8 @@ $(document).ready(function () {
       for (index = 0; index < result["data"].length; index++) {
         let countryName = result["data"][index]["properties"]["name"];
 
-
-
         let countryCode = result["data"][index]["properties"]["iso_a3"];
 
-       
 
         $("#countryList").append(
           "<option id= "+ countryCode + " value=" + countryCode + ">" + countryName + "</option>"
@@ -191,8 +188,22 @@ $(document).ready(function () {
       weatherInfoButton.setAttribute("class", "mainMenuButtonClass");
       weatherInfoButton.innerHTML = "Current Weather";
 
+      const currencyConverterButton = document.createElement('button');
+      currencyConverterButton.setAttribute('id','currencyConverterButton');
+      currencyConverterButton.setAttribute('class','mainMenuButtonClass');
+      currencyConverterButton.innerHTML = 'Currency Converter';
+
+      const wikiInfoButton = document.createElement('button');
+      wikiInfoButton.setAttribute('id','wikiInfoButton');
+      wikiInfoButton.setAttribute('class','mainMenuButtonClass');
+      wikiInfoButton.innerHTML = 'Wiki Information';
+
+
       mainMenuButtonsDiv.append(generalInfoButton);
       mainMenuButtonsDiv.append(weatherInfoButton);
+      mainMenuButtonsDiv.append(currencyConverterButton);
+      mainMenuButtonsDiv.append(wikiInfoButton);
+
 
      
 
@@ -212,7 +223,6 @@ $(document).ready(function () {
   
 
       generalInfoButton.onclick = function () {
-        console.log("The cca3 is: " + feature.properties.iso_a3);
 
       
 
@@ -229,8 +239,10 @@ $(document).ready(function () {
 
           success: function (result) {
             if (result.status.name == "ok") {
-              console.log("WeatherData Received Fine!");
+              
+              console.log("General Informatiom Received Fine!");
 
+              console.log(`Response Time was:${result['status']['returnedIn']}`)
               // console.log("The result from restCountries is: " + (JSON.stringify(result)));
 
               // $("#popUpDiv").empty();
@@ -493,6 +505,10 @@ $(document).ready(function () {
                 if (document.getElementById("currencyDiv")) {
                   $("#currencyDiv").show();
                 } else {
+
+
+                  
+
                   const currencyDiv = document.createElement("div");
                   currencyDiv.setAttribute("id", "currencyDiv");
                   currencyDiv.setAttribute('class','generalInfoSubDiv');
@@ -520,6 +536,17 @@ $(document).ready(function () {
                   );
 
                   
+                  const exchangeRateBackButtonDiv = document.createElement('div');
+                  exchangeRateBackButtonDiv.setAttribute('id','exchangeRateBackButtonDiv');
+                  currencyDiv.append(exchangeRateBackButtonDiv);
+
+                  const exchangeRateBackButton = document.createElement('button');
+                  exchangeRateBackButton.setAttribute('id','exchangeRateBackButton');
+                  exchangeRateBackButton.setAttribute('class','specialButtonClass')
+                  exchangeRateBackButton.innerHTML = 'Latest Currency Exchange Rate';
+                  currencyDiv.append(exchangeRateBackButton);
+
+
                   const currencyBackButtonDiv = document.createElement('div');
                   currencyBackButtonDiv.setAttribute('id','currencyBackButtonDiv');
                   currencyBackButtonDiv.setAttribute('class','generalInfoSubDivBackButtonDiv');
@@ -532,6 +559,155 @@ $(document).ready(function () {
 
                   currencyBackButtonDiv.append(currencyBackButton);
                 }
+
+                exchangeRateBackButton.onclick = function(){  
+                  
+                  $("#currencyDiv").hide();
+
+                  if (document.getElementById("exchangeRateDiv")){
+
+                    $("#exchangeRateDiv").show();
+
+                  } else {
+
+                    const exchangeRateDiv = document.createElement('div');
+                    exchangeRateDiv.setAttribute('id','exchangeRateDiv');
+                    exchangeRateDiv.setAttribute('class','generalInfoSubDiv');
+
+                    $("#popUpDiv").append(exchangeRateDiv);
+
+                    // Heading Text
+                    const currencyHeadingDiv = document.createElement('div');
+                    currencyHeadingDiv.setAttribute('id','currencyHeadingDiv');
+                    exchangeRateDiv.append(currencyHeadingDiv);
+
+                    
+
+                    const currencyHeadingText = document.createElement('p');
+                    currencyHeadingText.setAttribute('id','currencyHeadingText');
+                    currencyHeadingText.innerHTML = `Please pick a currency below to see the latest conversion rate for ${result["currency"][currencyName]["name"]}`;
+                    currencyHeadingDiv.append(currencyHeadingText)
+
+                    
+                    
+                    
+
+                    // Currency Form
+
+                    const exchangeRateFormDiv = document.createElement('div');
+                    exchangeRateFormDiv.setAttribute('id','exchangeRateFormDiv');
+                    exchangeRateDiv.append(exchangeRateFormDiv)
+                
+                    const exchangeRateForm = document.createElement('form');
+                    exchangeRateForm.setAttribute('id','exchangeRateForm')
+                    exchangeRateFormDiv.append(exchangeRateForm);
+
+                    $('<input/>').attr({ 
+                      type: 'text', 
+                      id: 'exchangeRateFormInput', 
+                      name: 'exchangeRateFormInput',
+                      list: 'currencyList',
+                      placeholder: 'Pick a Currency...',
+                      required: 'true'
+                    }).appendTo('#exchangeRateForm');
+
+                    // $('<datalist></datalist>').attr({
+                    //   id:'currencyList'
+                    // }).appendTo('#exchangeRateForm');
+
+                    const currencyList = document.createElement('datalist');
+                    currencyList.setAttribute('id','currencyList');
+                    exchangeRateForm.append(currencyList);
+
+                    
+                    const currencySubmitButton = document.createElement('button');
+                    currencySubmitButton.setAttribute('type','submit');
+                    currencySubmitButton.setAttribute('id','currencySubmitButton');
+                    currencySubmitButton.setAttribute('title','Currency Submit Button');
+                    
+                    currencySubmitButton.innerHTML = 'Submit';
+                    exchangeRateForm.append(currencySubmitButton);
+                    
+
+                    // JQuery to get currency names
+
+                    // Populating datalist with currency names
+                    
+                    
+                    $.get('https://openexchangerates.org/api/currencies.json', function(currencyData) {
+                              
+                              for (var currencyCode in currencyData) {
+
+                                console.log(currencyCode)
+                                console.log( currencyData[currencyCode])
+                      
+                                $("#currencyList").append(
+                                  "<option id= "+ currencyCode + " value=" + currencyCode + ">" + currencyData[currencyCode] + "</option>"
+                                );                      
+                              }   
+                            });                        
+
+
+                    // Currency Back Button + Div
+                    const exchangeRateBackButtonDiv = document.createElement('div');
+                    exchangeRateBackButtonDiv.setAttribute('id','exchangeRateBackButtonDiv');
+                    exchangeRateBackButtonDiv.setAttribute('class','generalInfoSubDivBackButtonDiv')
+                    exchangeRateDiv.append(exchangeRateBackButtonDiv);
+
+                    const exchangeRateBackButton = document.createElement('button');
+                    exchangeRateBackButton.setAttribute('id','exchangeRateBackButton');
+                    exchangeRateBackButton.setAttribute('class','generalInfoSubDivBackButton');
+                    exchangeRateBackButton.innerHTML = 'Back';
+
+                    exchangeRateBackButtonDiv.append(exchangeRateBackButton)
+
+
+
+                    $("#exchangeRateForm").submit(function (event) {
+                      event.preventDefault();
+
+                      
+                      var originalCurrency = Object.keys(result['currency']);
+                      var finalCurrency = $('#exchangeRateFormInput').val();
+
+                      console.log(`original value was: ${originalCurrency}`)
+                      console.log(`User went for ${finalCurrency}`)
+
+                      // Now I am getting JSON of All actual currency rates with base currency of USD
+
+                      $.get('https://openexchangerates.org/api/latest.json', {app_id: 'eabcbd09dc734c58a70111751571a26d'}, function(data) {
+
+
+                          const usdToOriginal = data["rates"][originalCurrency];
+                          const usdToFinal = data["rates"][finalCurrency];
+                   
+                          
+                          console.log(`USD to ${originalCurrency} is ${usdToOriginal}`);
+                          console.log(`USD to ${finalCurrency} is ${usdToFinal}`);
+
+                          // FINISHE TIME CONVERSION!
+                          // console.log(`Time was: ${exchangeRadableTime}`)
+    
+                      });
+
+
+                     
+                    
+                    
+                    })
+
+
+                    exchangeRateBackButton.onclick = function(){
+
+                      $("#exchangeRateDiv").hide();
+                      $("#currencyDiv").show();
+                    }
+
+                  }
+
+                }
+                
+
 
                 currencyBackButton.onclick = function () {
                   $("#currencyDiv").hide();
@@ -859,10 +1035,13 @@ $(document).ready(function () {
 
                   const utcInfoButtonDiv = document.createElement('div');
                   utcInfoButtonDiv.setAttribute('id','utcInfoButtonDiv');
+
                   timeZonesDiv.append(utcInfoButtonDiv);
 
                   const utcInfoButton = document.createElement('button');
                   utcInfoButton.setAttribute('id','utcInfoButton');
+                  utcInfoButton.setAttribute('class','specialButtonClass')
+
                   utcInfoButton.innerHTML = `What is UTC?`;
                   utcInfoButtonDiv.append(utcInfoButton);
 
@@ -2402,6 +2581,369 @@ $(document).ready(function () {
         }
       };
 
+      currencyConverterButton.onclick = function (){
+
+       
+        $.ajax({
+          url: "php/latestExchangeRates.php",
+          type: 'GET',
+          dataType: 'json',
+
+          success: function(result){
+            
+
+        $("#mainMenuDiv").hide();
+
+        if (document.getElementById("currencyConverterDiv")){
+
+          $("#currencyConverterDiv").show();
+
+        } else {
+        
+          const currencyConverterDiv = document.createElement('div');
+          currencyConverterDiv.setAttribute('id','currencyConverterDiv');
+          currencyConverterDiv.setAttribute('class','generalInfoMenuDiv');
+
+          popUpDiv.append(currencyConverterDiv);
+
+
+          const currencyHeadingDiv = document.createElement('div');
+          currencyHeadingDiv.setAttribute('id','currencyHeadingDiv');
+          currencyConverterDiv.append(currencyHeadingDiv)
+
+          const currencyHeadingText = document.createElement('p');
+          currencyHeadingText.setAttribute('id','currencyHeadingText');
+          currencyHeadingText.innerHTML = 'Welcome to Currency Converter Section';
+          currencyHeadingDiv.append(currencyHeadingText);
+
+          const currencySpanText = document.createElement('span');
+          currencySpanText.setAttribute('id','currencySpanText');
+          currencySpanText.innerHTML = 'Please pick a currency you want to convert with appropriate amount';
+          currencyHeadingDiv.append(currencySpanText);
+
+
+          
+          // Curency Rates Form
+          const currencyConverterFormDiv = document.createElement('div');
+          currencyConverterFormDiv.setAttribute('id','currencyConverterFormDiv');
+          currencyConverterDiv.append(currencyConverterFormDiv);
+
+
+          const currencyConverterForm = document.createElement('form');
+          currencyConverterForm.setAttribute('id','currencyConverterForm');
+          currencyConverterFormDiv.append(currencyConverterForm);
+
+          const currencyNameList = document.createElement('datalist');
+          currencyNameList.setAttribute('id','currencyNameList')
+          currencyConverterForm.append(currencyNameList)
+
+
+          var currencyDataNames;
+          // Populating datalist
+          $.get('https://openexchangerates.org/api/currencies.json', function(currencyData) {
+                              
+                              for (var currencyCode in currencyData) {
+
+                                console.log(currencyCode)
+                                console.log( currencyData[currencyCode])
+                      
+                                $("#currencyNameList").append(
+                                  "<option id= "+ currencyCode + " value=" + currencyCode + ">" + currencyData[currencyCode] + "</option>"
+                                );                      
+                              } 
+
+                              currencyDataNames = currencyData;
+                              
+                              
+
+                            });  
+
+          
+
+          const currencyFromLabel = document.createElement('label');
+          currencyFromLabel.setAttribute('for','fromCurrency');
+          currencyFromLabel.setAttribute('class','currencyConverterFormLabelClass');
+          currencyFromLabel.innerHTML = 'From';
+          currencyConverterForm.append(currencyFromLabel);
+
+          $('<input/>').attr({ 
+            type: 'text', 
+            id: 'fromCurrency', 
+            name: 'fromCurrency',
+            list: 'currencyNameList',
+            placeholder: 'Pick a Currency...',
+            class: 'currencyConverterFormInputClass',
+            required: 'true'
+          }).appendTo('#currencyConverterForm');
+
+
+          const currencyToLabel = document.createElement('label');
+          currencyToLabel.setAttribute('for','currencyTo');
+          currencyToLabel.setAttribute('class','currencyConverterFormLabelClass');
+          currencyToLabel.innerHTML = 'To';
+          currencyConverterForm.append(currencyToLabel)
+
+
+          $('<input/>').attr({ 
+            type: 'text', 
+            id: 'currencyTo', 
+            name: 'currencyTo',
+            list: 'currencyNameList',
+            placeholder: 'Pick a Currency...',
+            class: 'currencyConverterFormInputClass',
+            required: 'true'
+          }).appendTo('#currencyConverterForm');
+
+
+          const amountLabel = document.createElement('label');
+          amountLabel.setAttribute('for','amount');
+          amountLabel.setAttribute('class','currencyConverterFormLabelClass');
+          amountLabel.innerHTML = 'Amount';
+          currencyConverterForm.append(amountLabel);
+
+          $('<input/>').attr({ 
+            type: 'number', 
+            id: 'amount', 
+            name: 'amount', 
+            class: 'currencyConverterFormInputClass',
+            required: 'true'
+          }).appendTo('#currencyConverterForm');
+
+
+          const currencyConverterFormSubmitButton = document.createElement('button');
+          currencyConverterFormSubmitButton.setAttribute('id','currencyConverterFormSubmitButton');
+          currencyConverterFormSubmitButton.setAttribute('type','submit');
+          currencyConverterFormSubmitButton.setAttribute('title','currencyConverterFormSubmitButton');
+          currencyConverterFormSubmitButton.innerHTML = 'Submit';
+          currencyConverterForm.append(currencyConverterFormSubmitButton)
+
+
+          const convertedCurrencyInfoDiv = document.createElement('div');
+          convertedCurrencyInfoDiv.setAttribute('id','convertedCurrencyInfoDiv');
+          currencyConverterDiv.append(convertedCurrencyInfoDiv);
+          $('#convertedCurrencyInfoDiv').hide();
+
+
+          const convertedCurrencyInfoText = document.createElement('p');
+          convertedCurrencyInfoText.setAttribute('id','convertedCurrencyInfoText');
+          convertedCurrencyInfoDiv.append(convertedCurrencyInfoText)
+
+          const convertedCurrencyInfoTextSpan = document.createElement('p');
+          convertedCurrencyInfoTextSpan.setAttribute('id','convertedCurrencyInfoTextSpan');
+          convertedCurrencyInfoDiv.append(convertedCurrencyInfoTextSpan)
+
+          
+
+
+          $('#currencyConverterForm').submit(function(event){
+
+            event.preventDefault();
+        
+            const original = $('#fromCurrency').val();
+            const final = $('#currencyTo').val();
+
+            const originalLowerCase = original.toLowerCase();
+            const finalLowerCase = final.toLowerCase();
+            
+            const amount = $('#amount').val();
+
+            let parsedAmount = parseFloat(amount);
+
+
+            const currentRateTime = result['timestamp']
+
+            // Making Sure that USer Enters valid input
+
+            const validCurrencyCodes = [];
+            const validCurrencyValues = [];
+
+            var currencyNames = document.getElementById("currencyNameList");
+        
+            for(let i = 0; i < currencyNames.options.length; i++){
+
+              // To get all possible currency codes
+              validCurrencyCodes.push((currencyNames.options[i].value).toLowerCase())
+              
+              // To get full name in case user would want to type them
+              validCurrencyValues.push((currencyNames.options[i].text).toLowerCase())
+            
+            }
+
+            
+
+            if(validCurrencyCodes.includes(originalLowerCase) || validCurrencyValues.includes(originalLowerCase)){
+
+
+
+              if(validCurrencyCodes.includes(finalLowerCase) || validCurrencyValues.includes(finalLowerCase)){
+
+                if(amount >= 0){
+
+                  // In case user enter valid currency name, I still need to find corresponding Currency Code
+
+                  let originalCurrencyCode;
+                  let finalCurrencyCode;
+                  
+                  if(originalLowerCase.length > 3){
+
+                  let currentOriginalValue;
+                                  
+
+                  Object.keys(currencyDataNames).forEach(function(key) {
+
+                    currentOriginalValue = (currencyDataNames[key]).toLowerCase();
+                
+                    if(currentOriginalValue === originalLowerCase){              
+                        console.log(`User entered ${originalLowerCase}, in my JSON it is under ${key}`);
+
+                        originalCurrencyCode = key;
+                       
+                    }                    
+                  })                  
+                  } else {
+
+                    originalCurrencyCode = originalLowerCase.toUpperCase();
+
+                  }
+
+                
+                
+                if(finalLowerCase.length > 3){
+
+                  let currentOriginalValue;
+                                  
+
+                  Object.keys(currencyDataNames).forEach(function(key) {
+
+                    currentOriginalValue = (currencyDataNames[key]).toLowerCase();
+                
+                    if(currentOriginalValue === finalLowerCase){              
+                        console.log(`User entered ${finalLowerCase}, in my JSON it is under ${key}`);
+
+                        finalCurrencyCode = key;
+                       
+                    }                    
+                  }) 
+
+                      
+                } else {
+
+                  finalCurrencyCode = finalLowerCase.toUpperCase();
+                }
+
+                  // As I do not have paid membership, in order to get conversion I need to go through base currency that is US Dollar
+
+                  
+                  
+                  console.log(`Original is: ${original}\nFinal is ${final}`)
+                  
+                  const originalToUSD = result['rates'][originalCurrencyCode];
+                  const finalToUSD = result['rates'][finalCurrencyCode];
+
+                  const convertedValue = (amount * (finalToUSD / originalToUSD)).toFixed(4);
+
+
+                  console.log(`Original to USD: ${originalToUSD}\nFinal to USD ${finalToUSD}`)
+
+
+                  const originalCurrencyName = currencyDataNames[originalCurrencyCode];
+                  const finalCurrencyName = currencyDataNames[finalCurrencyCode]
+                
+
+                  // Converting timestamp to Human Readable
+                  var JSONDate = new Date(currentRateTime * 1000);
+
+                  const rateDate = JSONDate.toLocaleDateString("en-GB");
+      
+                  console.log(rateDate)
+      
+                  const rateTime = JSONDate.toLocaleTimeString("it-IT");
+      
+                  console.log(rateTime)
+      
+                  const cleanRateTime = rateDate + " at " + rateTime;
+      
+                  $('#convertedCurrencyInfoDiv').show();
+      
+                  convertedCurrencyInfoText.innerHTML = `For ${parsedAmount} ${originalCurrencyName}<br><br> you will get<br><br> ${convertedValue} ${finalCurrencyName}.`;
+
+                  convertedCurrencyInfoTextSpan.innerHTML = `The latest conversion rate is valid from ${cleanRateTime}`
+
+
+                  console.log()
+
+
+
+                
+                } else {
+
+                  alert('Please Enter Valid Curency Amount. Not negative number');
+                  currencyConverterForm.reset();
+
+
+                }
+
+              } else {
+
+                alert('Please Enter Valid Curency Name');
+                currencyConverterForm.reset();
+             
+              }
+            } else {
+
+              alert('Please Enter Valid Curency Name');
+              
+              currencyConverterForm.reset()
+
+            }
+
+          })
+          
+
+
+          // Converter Back Button
+
+          const currencyConverterBackButtonDiv = document.createElement('div');
+          currencyConverterBackButtonDiv.setAttribute('id','currencyConverterBackButtonDiv');
+          currencyConverterBackButtonDiv.setAttribute('class','mainMenuBackButtonDivClass')
+          currencyConverterDiv.append(currencyConverterBackButtonDiv);
+
+
+          const currencyConverterBackButton = document.createElement('button');
+          currencyConverterBackButton.setAttribute('id','currencyConverterBackButton');
+          currencyConverterBackButton.setAttribute('class','mainMenuBackButtonClass');
+          currencyConverterBackButton.innerHTML = 'Back';
+          currencyConverterBackButtonDiv.append(currencyConverterBackButton)
+
+          currencyConverterBackButton.onclick = function () {
+
+            $("#currencyConverterDiv").hide();
+            $("#mainMenuDiv").show();
+
+          }
+
+        }
+
+
+
+
+           
+          },
+
+          error: function (jqXHR, textStatus, errorThrown) {
+            console.log("The data from Latest Currency Rates have not been sent");
+          },
+
+
+
+        })
+
+
+
+      }
+
+
+
       
     }
 
@@ -2462,6 +3004,8 @@ $(document).ready(function () {
     }
 
     
+  
+
 
   $("#countryForm").submit(function (event) {
     event.preventDefault();
@@ -2515,7 +3059,7 @@ $(document).ready(function () {
     
           // First I need to identify the country based on user choice. So I can use json objec or that current country
           
-          console.log(` countryCodeCC3 is: ${countryCodeCC3}`)
+
           
           const country = (worldCountries['features']).filter((country) => country["properties"]["iso_a3"] === countryCodeCC3);
 

@@ -97,15 +97,13 @@
     width: 80vw;
     height: 80vh;
     display: flex;
-    justify-content: space-around;
-    align-items: space-between;
-
-   
+    /* justify-content: space-around; */
+ 
     flex-direction: column;
     align-items: center;
     justify-content: center;
 
-    gap: 15%;
+    gap: 7.5%;
 
 
 }
@@ -163,12 +161,21 @@ transform: scale(0.95);
 
     /* border: 5px red solid; */
     width: 80vw;
-    height: 75vh;
+    height: 77.5vh; 
     padding: 5%;
     font-size: 150%;
     overflow: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+   
+
 
 }
+
+
+
+
 
 .generalInfoSubDivBackButtonDiv {
     display: flex;
@@ -204,6 +211,56 @@ width: 50%;
 
 }
 
+
+
+#currencyHeadingText {
+
+    text-align: center;
+    font-weight: bold;
+    font-style: italic;
+    font-size: larger;
+}
+
+
+#exchangeRateForm{
+
+    display: flex;
+    justify-content: center;
+}
+
+#exchangeRateFormInput,
+#currencySubmitButton {
+    display: inline-block;
+    padding: 10px 15px;
+    font-size: 20px;
+ 
+    -webkit-appearance: none;
+}
+
+#exchangeRateFormInput {
+    border: 1px solid lightgray;
+    border-radius: 25px 0 0 25px;
+}
+
+#currencySubmitButton {
+    background-color: #EB971E;
+    color: white;
+    /**
+     * If the input field has a border,
+     * you need it here too to achieve equal heights.
+     */
+    border: 1px solid transparent;
+    border-radius: 0 25px 25px 0;
+}   
+
+#currencySubmitButton:hover{
+
+    transition: 0.7s;
+    background-color: #DEB7FC;
+    color: black;
+}
+
+
 .generalInfoSubDivBackButton:hover {
 background-position: right center;
 /* change the direction of the change here */
@@ -215,7 +272,7 @@ text-decoration: none;
 transform: scale(0.95);
 }
 
-#utcInfoButton {
+.specialButtonClass {
   --b: 3px;   /* border thickness */
   --s: .45em; /* size of the corner */
   --color: #373B44;
@@ -238,14 +295,14 @@ transform: scale(0.95);
   touch-action: manipulation;
 }
 
-#utcInfoButton:hover,
-#utcInfoButton:focus-visible{
+.specialButtonClass:hover,
+.specialButtonClass:focus-visible{
   --_p: 0px;
   outline-color: var(--color);
   outline-offset: .05em;
 }
 
-#utcInfoButton:active {
+.specialButtonClass:active {
   background: var(--color);
   color: #fff;
 }
@@ -297,6 +354,15 @@ transform: scale(0.95);
 } */
 
 
+/* STYLES FOR CURRENCY DIV */
+/* .currencyConverterDivClass {
+
+    display: flex;
+    flex-direction: column;
+} */
+
+
+
 /* * STYLES FROM FORECAST */
 
 .forecastOverviewDivClass {
@@ -304,7 +370,7 @@ transform: scale(0.95);
 
 /* width: 100%; */
 width: 80vw;
-height: 80vh;   
+height: 77.5vh;   
 overflow: auto;
 padding: 3%;
 /* border: gray 4px dashed; */
@@ -364,7 +430,7 @@ justify-content: center;
 .fifthDayDivClass {
 
 padding: 2%;
-height: 80vh;
+height: 77.5vh; 
 width:100vw;
 /* background-color:  #73C2FB; */
 background-color: #deb7fc;
@@ -515,9 +581,16 @@ margin: 10% 0 10% 0
 
 display: flex;
 flex-direction: row;
-margin: 3%;
-gap: 3%;
+/* margin: 3%; */
+gap: 10px;
+flex-wrap: wrap;
+justify-content: space-evenly;
 
+}
+
+.forecastDivClass > * {
+
+    width: 150px;
 }
 
 
@@ -670,15 +743,18 @@ text-align: center;
 
     display: flex;
     flex-direction: row;
-    justify-content:space-around;
+    justify-content:space-evenly;
     gap: 10%;
-
+    row-gap: 30px;
+    flex-wrap: wrap;
+    /* padding: 0 0 10% 0; */
+    
 }
 
 /* GENERAL */
 .mainMenuButtonClass {
 
-    width: 30vw;
+    width: 25vw;
     height: 15vh;
     border-radius: 10px;
     color: white;
@@ -707,22 +783,20 @@ transform: scale(0.95);
 }
 
 /* GENERAL */
-#generalInfoMenuDiv {
+#generalInfoMenuDiv,
+#currencyConverterDiv {
 
     display: flex;
     flex-direction: column;
     width: 80vw;
-    height: 70vh;
+    height: 77.5vh; 
     margin:0;
     overflow: auto;
     font-family: Georgia, 'Times New Roman', Times, serif;
 
 }
 
-#generalInfoMenuDiv > * {
-    /* border: 2px yellow solid; */
-    
-}
+
 
 .generalInfoTextDivClass {
 
@@ -807,6 +881,100 @@ transform: scale(0.95);
 } 
 
 
+/* GENERAL */
+#currencyHeadingDiv{
+    text-align: center;
+    padding: 4.5% 4.5% 2% 4.5%;
+}
+
+#currencyHeadingText {
+
+    font-size: 250%;
+}
+
+#currencySpanText {
+
+    font-style: italic;
+    font-size: 150%;
+}
+
+#currencyConverterForm {
+
+    display: flex;
+    flex-direction: column;
+    padding: 0 10% 5% 10%;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+#currencyConverterForm > * {
+
+    padding:3%;
+    margin:0;
+}
+
+.currencyConverterFormInputClass{
+
+    font-size: 150%;
+    text-align: center;
+}
+
+.currencyConverterFormLabelClass {
+    font-size: 150%;
+    font-weight: bold;
+
+}
+
+
+#currencyConverterFormSubmitButton {
+
+    margin: 6% 0 0 0;
+
+    border-radius: 25px;
+    background-color: #DEB7FC;
+    color:#E79524;
+    border: #E79524 solid double;
+    width: 15vw;
+    font-size: 200%;
+    
+
+}
+
+#currencyConverterFormSubmitButton:hover{
+
+    transition: 0.7s;
+    color: white;
+    background-color: #E79524;
+    width: 25vw;
+    cursor: pointer;
+
+}
+
+#currencyConverterFormSubmitButton:not(:hover){
+
+    transition: 0.7s;
+    background-color: #DEB7FC;
+    color:black;
+    width: 15vw;
+
+}
+
+#convertedCurrencyInfoText {
+
+    font-size: 150%;
+    /* font-style: italic; */
+    font-weight: bold;
+    padding: 0 5% 5% 5%;
+    text-align: center;
+}
+
+#convertedCurrencyInfoTextSpan{
+
+    font-size: 150%;
+    text-align: center;
+    padding: 0 5%;
+}
 
 
 
@@ -827,6 +995,7 @@ transform: scale(0.95);
 
     font-weight: bold;
     font-size: 200%;
+    
 } 
 
 /* COLORS:
@@ -916,6 +1085,16 @@ margin: 3%;
 }
 
 
+#forecastOverviewHeadingTextSpan {
+
+margin: 5%;
+font-style: italic;
+
+font-size: 1.3rem;
+
+}
+
+
 #formAndCoordinatesDiv {
 
     display: flex;
@@ -967,6 +1146,10 @@ margin: 3%;
     font-size: 250%;
 }
 
+.exchangeRateFormDiv {
+    display: flex;
+    flex-direction: row;
+}
 
 
 }
@@ -1167,7 +1350,7 @@ html {
     align-items: center;
     justify-content: center;
     margin: 0;
-    padding: 10% 0;
+    padding: 12% 0;
     
 
 }
@@ -1249,10 +1432,21 @@ html {
 .mainMenuButtonsDivClass {
 
     
+    
     flex-direction: column;
     justify-content:center;
-    /* gap: 10%; */
-    
+    row-gap: 0;
+    overflow: auto;
+    /* gap:5%; */
+    gap:0;
+    row-gap: 0;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items:center;
+    /* margin:2% 0 ; */
+    width: 100%;
+    height: 40vh;
+    /* padding: 5% */
    
 
 
@@ -1270,13 +1464,18 @@ html {
 /* MOBILE */
 .mainMenuButtonClass {
 
-    /* height: 10vh;
-    width: 50vw; */
+    height: 10vh;
+    width: 50vw;
     font-size: medium;
-    padding: 0;
-    margin: 7.5%;
+    padding: 5%;
+    margin: 3%;
     width: 40vw;
     height: 15vh;
+    text-align: center;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
 
 }
@@ -1293,6 +1492,7 @@ html {
     /* display: inline-block; */
 }
 
+/* Mobile */
 .mainMenuTextDivClass{
 
 
@@ -1306,13 +1506,17 @@ html {
 .mainMenuDivClass {
 
     /* border: dashed 5px green; */
-    gap:0;
+   
     align-items: center;
     justify-content: center;
-        flex-grow: 0.5 1;
+    /* padding: 3% 0; */
+    flex-direction: column;
+    gap:0;  
+
 
 }
 
+/* MOBILE */
 #generalInfoTextHeading {
 
     font-size: large;
@@ -1321,6 +1525,7 @@ html {
 
 }
 
+/* MOBILE */
 #generalInfoText {
     font-size: large;
     margin: 5% 10%;
@@ -1329,6 +1534,7 @@ html {
 
 }
 
+/* MOBILE */
 .generalInfoButtonsDivClass {
 
     display: flex;
@@ -1336,6 +1542,7 @@ html {
     
 }
 
+/* MOBILE */
 .generalInfoButtonClass {
     height: 10vh;
     width: 50vw;
@@ -1343,6 +1550,7 @@ html {
     
 }
 
+/* MOBILE */
 .mainMenuBackButtonClass,
 .generalInfoSubDivBackButton {
 
@@ -1352,11 +1560,14 @@ html {
 
 }
 
+/* MOBILE */
 .flagContainerClass {
     display: flex;
     flex-direction: column;
 }
 
+
+/* MOBILE */
 .forecastDivClass{
 
     display: flex;
@@ -1365,20 +1576,24 @@ html {
     justify-content: center;
 }
 
+/* MOBILE */
 .forecastDivClass > * {
 
     margin: 20% 0 0 0;
 }
 
+/* MOBILE */
 .dayButtonClass {
 
     width: 49vw;
 }
 
+/* MOBILE */
 .dailyForecastThumbDivClass {
     width: 50vw;
 }
 
+/* MOBILE */
 #forecastOverviewHeadingText{
 
     font-size: x-large;
@@ -1388,6 +1603,7 @@ html {
 
 }
 
+/* MOBILE */
 #forecastOverviewHeadingTextSpan{
 
     font-style: italic;
@@ -1395,6 +1611,7 @@ html {
     font-size: large;
 }
 
+/* MOBILE */
 #overviewTempSwitchHeading {
 
     margin: 10% 0;
@@ -1403,6 +1620,7 @@ html {
     
 }
 
+/* MOBILE */
 .overviewTempButtonClass {
 
     padding: 0;
@@ -1411,31 +1629,32 @@ html {
     
 }
 
+/* MOBILE */
 .forecastOverviewDivClass {
 
     padding: 10%;
+    height: 75vh;
 }
 
+#currencyConverterDiv {
+    height: 75vh;
+
+}
+
+/* MOBILE */
 .overviewTempSwitchDivClass {
 
     gap: 15%;
 }
 
-#flagPictureImgDiv {
-
-    /* margin: 10%; */
-    /* width: 50%; */
-    /* width: 250vw;
-    height: 100vh; */
-    /* padding: 20%; */
-}
-
+/* MOBILE */
 .flagPictureNameDiv h4{
 
     text-align: center;
     font-size: 100%;
 }
 
+/* MOBILE */
 .fullWeatherInfoDay {
 
     display: flex;
@@ -1443,6 +1662,7 @@ html {
     gap: 10%;
 }
 
+/* MOBILE */
 .fullWeatherInfoDay >* {
 
     border: 7px double #FF512F;
@@ -1452,6 +1672,7 @@ html {
 
 }
 
+/* MOBILE */
 .forecastDayUpperPartDivClass {
 
     flex-direction: column;
@@ -1460,6 +1681,7 @@ html {
     font-size: 120%;
 }
 
+/* MOBILE */
 .forecastDayUpperPartDivClass h3{
 
     text-align: center;
@@ -1467,6 +1689,7 @@ html {
     
 }
 
+/* MOBILE */
 .tempWindPrecButtonsDivClass {
 
     display: flex;
@@ -1500,6 +1723,30 @@ html {
     
     padding: 15% 0;
 
+}
+
+.forecastOverviewDivClass{
+    height: 75vh;
+
+}
+
+#convertedCurrencyInfoDiv {
+
+    padding: 0 0 10% 0;
+}
+
+#currencyConverterDiv {
+
+   padding:0;
+   height: 75vh;
+
+}
+
+
+#currencyHeadingDiv {
+
+    padding:0;
+    margin:0;
 
 }
 }
