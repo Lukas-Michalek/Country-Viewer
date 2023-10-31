@@ -611,9 +611,7 @@ $(document).ready(function () {
                       required: 'true'
                     }).appendTo('#exchangeRateForm');
 
-                    // $('<datalist></datalist>').attr({
-                    //   id:'currencyList'
-                    // }).appendTo('#exchangeRateForm');
+                   
 
                     const currencyList = document.createElement('datalist');
                     currencyList.setAttribute('id','currencyList');
@@ -633,6 +631,7 @@ $(document).ready(function () {
 
                     // Populating datalist with currency names
                     
+                    var currencyDataList;
                     
                     $.get('https://openexchangerates.org/api/currencies.json', function(currencyData) {
                               
@@ -644,8 +643,24 @@ $(document).ready(function () {
                                 $("#currencyList").append(
                                   "<option id= "+ currencyCode + " value=" + currencyCode + ">" + currencyData[currencyCode] + "</option>"
                                 );                      
-                              }   
-                            });                        
+                              } 
+                              
+                              currencyDataList = currencyData;
+                            });  
+                            
+                    // Current Exchange rate the is shown for user
+
+                    const currentExchangeRateDiv = document.createElement('div');
+                    currentExchangeRateDiv.setAttribute('id','currentExchangeRateDiv');
+                    exchangeRateDiv.append(currentExchangeRateDiv);
+
+                    const currentExchangeRateText = document.createElement('p');
+                    currentExchangeRateText.setAttribute('id','currentExchangeRateText');
+                    currentExchangeRateDiv.append(currentExchangeRateText)
+
+                    const currentExchangeRateTextSpan = document.createElement('p');
+                    currentExchangeRateTextSpan.setAttribute('id','currentExchangeRateTextSpan');
+                    currentExchangeRateDiv.append(currentExchangeRateTextSpan)
 
 
                     // Currency Back Button + Div
@@ -668,31 +683,110 @@ $(document).ready(function () {
 
                       
                       var originalCurrency = Object.keys(result['currency']);
+                      
                       var finalCurrency = $('#exchangeRateFormInput').val();
 
-                      console.log(`original value was: ${originalCurrency}`)
-                      console.log(`User went for ${finalCurrency}`)
+                      var finalCurrencytoLower = finalCurrency.toLowerCase();
 
-                      // Now I am getting JSON of All actual currency rates with base currency of USD
+                      const validExchangeCodes = [];
+                      const validExchangeValues = [];
+
+                      // Input check if user entered valid currency
+                      for(let i = 0; i < currencyList.options.length; i++){
+
+                        // To get all possible currency codes
+                        validExchangeCodes.push((currencyList.options[i].value).toLowerCase())
+                        
+                        // To get full name in case user would want to type them
+                        validExchangeValues.push((currencyList.options[i].text).toLowerCase())
+                      
+                      }
+
+                      // If the currency code or name is in the JSON datasheet
+                      if(validExchangeCodes.includes(finalCurrencytoLower) || validExchangeValues.includes(finalCurrencytoLower)){
+
+                        let finalCurrencyCode;
+
+                        // The user enters the whole name of currency
+                        if(finalCurrencytoLower.length > 3){
+                        
+                          
+                            let currentFinalValue;
+                            
+                                            
+                            // Iterate through all the values to find corresponding key
+                            Object.keys(currencyDataList).forEach(function(key) {
+          
+                              currentFinalValue = (currencyDataList[key]).toLowerCase();
+                          
+                              if(currentFinalValue === finalCurrencytoLower){              
+                                  console.log(`User entered ${finalCurrencytoLower}, in my JSON it is under ${key}`);
+          
+                                  finalCurrencyCode = key;
+                                 
+                              }                    
+                            })                  
+                            } 
+                            
+                            // Else the user picked or enterd currency code
+                            else {
+          
+                              finalCurrencyCode = finalCurrencytoLower.toUpperCase();
+          
+                            }
+
+
+                             // Now I am getting JSON of All actual currency rates with base currency of USD
 
                       $.get('https://openexchangerates.org/api/latest.json', {app_id: 'eabcbd09dc734c58a70111751571a26d'}, function(data) {
 
 
-                          const usdToOriginal = data["rates"][originalCurrency];
-                          const usdToFinal = data["rates"][finalCurrency];
-                   
-                          
-                          console.log(`USD to ${originalCurrency} is ${usdToOriginal}`);
-                          console.log(`USD to ${finalCurrency} is ${usdToFinal}`);
+                      const usdToOriginal = data["rates"][originalCurrency];
+                      const usdToFinal = data["rates"][finalCurrencyCode];
 
-                          // FINISHE TIME CONVERSION!
-                          // console.log(`Time was: ${exchangeRadableTime}`)
-    
-                      });
+               
+                      const convertedCurrencyValue = ((usdToFinal / usdToOriginal)).toFixed(4);
 
 
+                      const currencyRateTime = data['timestamp'];
+
+                      var exchangeJSONDate = new Date(currencyRateTime * 1000);
+
+                      const exchangeRateDate = exchangeJSONDate.toLocaleDateString("en-GB");
+          
                      
-                    
+          
+                      const exchangeRateTime = exchangeJSONDate.toLocaleTimeString("it-IT");
+          
+                      
+          
+                      const cleanExchangeRateTime = exchangeRateDate + " at " + exchangeRateTime;
+
+
+                      currentExchangeRateText.innerHTML = `The current exchange rate of ${currencyDataList[originalCurrency]} is ${convertedCurrencyValue} ${currencyDataList[finalCurrencyCode]}.`;
+
+                      currentExchangeRateTextSpan.innerHTML = `The conversion reate is valid from ${cleanExchangeRateTime}`;
+
+
+
+                   
+
+                      
+
+                  });
+
+
+                        
+
+
+                      } else {
+
+                        alert(`Please enter Valid Currency`);
+                        exchangeRateForm.reset();
+
+
+                      }
+                   
                     
                     })
 
@@ -2602,7 +2696,7 @@ $(document).ready(function () {
         
           const currencyConverterDiv = document.createElement('div');
           currencyConverterDiv.setAttribute('id','currencyConverterDiv');
-          currencyConverterDiv.setAttribute('class','generalInfoMenuDiv');
+          // currencyConverterDiv.setAttribute('class','generalInfoMenuDiv');
 
           popUpDiv.append(currencyConverterDiv);
 
@@ -2943,6 +3037,151 @@ $(document).ready(function () {
       }
 
 
+      wikiInfoButton.onclick = function (){
+
+        let wikiLat = parseFloat($("#lattitude").html());
+        let wikiLong = parseFloat($("#longitude").html());
+
+        
+        $.ajax({
+
+          url: "php/wikiWebService.php",
+          type: "POST",
+          dataType: "json",
+
+          data: {
+
+            lat: wikiLat,
+            lng: wikiLong,
+          },
+
+          success: function(result){
+            
+            console.log(JSON.stringify(result));
+
+
+            $("#mainMenuDiv").hide();
+
+        if(document.getElementById('wikiInfoDiv')){
+
+          $('#wikiInfoDiv').show();
+
+        } else {
+
+          const wikiInfoDiv = document.createElement('div');
+          wikiInfoDiv.setAttribute('id','wikiInfoDiv');
+
+          popUpDiv.append(wikiInfoDiv)
+
+          const wikiInfoHeadingDiv = document.createElement('div');
+          wikiInfoHeadingDiv.setAttribute('id','wikiInfoHeadingDiv');
+          wikiInfoDiv.append(wikiInfoHeadingDiv);
+
+          const wikiInfoHeadingText = document.createElement('p');
+          wikiInfoHeadingText.setAttribute('id','wikiInfoHeadingText');
+          wikiInfoHeadingText.innerHTML = 'Here you can find our Top Picks that are the closest to location you have picked'
+          wikiInfoHeadingDiv.append(wikiInfoHeadingText);
+
+          const wikiMainBodyDiv = document.createElement('div');
+          wikiMainBodyDiv.setAttribute('id','wikiMainBodyDiv');
+          wikiInfoDiv.append(wikiMainBodyDiv)
+
+
+          if(result['data'].length === 0){
+
+            const noArticlesFoundText = document.createElement('p');
+            noArticlesFoundText.setAttribute('id','noArticlesFoundText');
+            noArticlesFoundText.innerHTML = 'Well, It seems that there are no Wiki Articles tied to this location. We would recommend choosing another part or country';
+          
+            wikiInfoDiv.append(noArticlesFoundText)
+
+          } else {
+
+
+
+          for(let i = 0; i < result['data'].length; i++){
+
+            let articleDiv = document.createElement('div');
+            articleDiv.setAttribute('id',`articleDiv${i}`);
+            articleDiv.setAttribute('class','articleDivClass');
+            wikiMainBodyDiv.append(articleDiv);
+
+            let articleTitle = document.createElement('h2');
+            articleTitle.setAttribute('id',`article${i}Title`);
+            articleTitle.setAttribute('class','articleTitleClass');
+            articleTitle.innerHTML = result['data'][i]['title'];
+            articleDiv.append(articleTitle)
+
+            let articleSummary = document.createElement('p');
+            articleSummary.setAttribute('id',`article${i}Summary`);
+            articleSummary.setAttribute('class','articleSummaryClass');
+            articleSummary.innerHTML = result['data'][i]['summary'];
+            articleDiv.append(articleSummary);
+
+            // findOutMoreLink will be a clickable anchor tag that looks like button
+            let findOutMoreLink = document.createElement('a');
+            findOutMoreLink.setAttribute('id',`findOutMoreLink${i}`);
+            findOutMoreLink.setAttribute('href',`https://${result['data'][i]['wikipediaUrl']}`)
+            findOutMoreLink.setAttribute('target',`_blank`)
+            articleDiv.append(findOutMoreLink);
+
+            let findOutMoreButton = document.createElement('button');
+            findOutMoreButton.setAttribute('id',`findOutMoreButton${i}`);
+            findOutMoreButton.setAttribute('class','specialButtonClass');
+            findOutMoreButton.innerHTML = `Find out more...`;
+            findOutMoreLink.append(findOutMoreButton);
+
+
+            
+
+          }
+
+      }
+
+
+          const wikiInfoBackButtonDiv = document.createElement('div');
+          wikiInfoBackButtonDiv.setAttribute('id','wikiInfoBackButtonDiv');
+          wikiInfoBackButtonDiv.setAttribute('class','mainMenuBackButtonDivClass');
+          wikiInfoDiv.append(wikiInfoBackButtonDiv);
+
+          const wikiInfoBackButton = document.createElement('button');
+          wikiInfoBackButton.setAttribute('id','wikiInfoBackButton');
+          wikiInfoBackButton.setAttribute('class','mainMenuBackButtonClass');
+          wikiInfoBackButton.innerHTML = 'Back';
+          wikiInfoBackButtonDiv.append(wikiInfoBackButton);
+
+
+          wikiInfoBackButton.onclick = function(){
+
+            $("#wikiInfoDiv").hide();
+            $("#mainMenuDiv").show();
+
+          }
+
+
+      
+        }
+
+          },
+
+          error: function (jqXHR, textStatus, errorThrown) {
+            console.log("The data from WikiInfo have not been sent");
+          } 
+
+
+
+
+
+
+
+        })
+
+     
+
+        
+
+      }
+
 
       
     }
@@ -2993,14 +3232,9 @@ $(document).ready(function () {
       var lat = coord[0].replace("LatLng(", "");
       var long = coord[1].replace(")", "");
 
-      // L.marker(e.latlng).addTo(map);
-
-      // $("#curentCoordinates").empty();
       $("#lattitude").html(lat);
       $("#longitude").html(long);
 
-      // $("#curentCoordinates").append("<b>Latitude: " + lat +
-      // "<br>Longitude: " + long + "</b>");
     }
 
     

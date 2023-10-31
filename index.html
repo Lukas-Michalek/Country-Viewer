@@ -260,6 +260,47 @@ width: 50%;
     color: black;
 }
 
+#wikiInfoHeadingDiv {
+
+    padding: 5% 10% 0 10%;
+}
+
+#wikiInfoHeadingText {
+
+    text-align: center;
+    font-weight: bold;
+    font-size: 175%;
+
+}
+
+.articleDivClass{
+
+    border: #FF512F double 7px;
+}
+
+#wikiMainBodyDiv {
+
+    padding: 3% 5% 0 5%;
+    display: flex;
+    flex-direction: column;
+}
+
+.articleDivClass {
+
+    margin: 4%;
+    padding: 5%;
+}
+
+
+
+#noArticlesFoundText {
+
+    text-align: center;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 125%;
+    padding: 0 10%;
+}
 
 .generalInfoSubDivBackButton:hover {
 background-position: right center;
@@ -273,9 +314,10 @@ transform: scale(0.95);
 }
 
 .specialButtonClass {
-  --b: 3px;   /* border thickness */
+  --b: 2px;   /* border thickness */
   --s: .45em; /* size of the corner */
-  --color: #373B44;
+  /* --color: #373B44; */
+  --color: #FF512F;
   
   padding: calc(.5em + var(--s)) calc(.9em + var(--s));
   color: var(--color);
@@ -784,7 +826,8 @@ transform: scale(0.95);
 
 /* GENERAL */
 #generalInfoMenuDiv,
-#currencyConverterDiv {
+#currencyConverterDiv,
+#wikiInfoDiv {
 
     display: flex;
     flex-direction: column;
@@ -889,7 +932,7 @@ transform: scale(0.95);
 
 #currencyHeadingText {
 
-    font-size: 250%;
+    font-size: 125%;
 }
 
 #currencySpanText {
@@ -926,7 +969,19 @@ transform: scale(0.95);
 
 }
 
+#currentExchangeRateText{
 
+    padding: 5% 5% 0 5%;
+    text-align: center;
+    font-weight: bold;
+}
+
+#currentExchangeRateTextSpan {
+    text-align: center;
+    padding: 5% 5% 0 5%;
+}
+
+/* GENERAL */
 #currencyConverterFormSubmitButton {
 
     margin: 6% 0 0 0;
@@ -934,7 +989,7 @@ transform: scale(0.95);
     border-radius: 25px;
     background-color: #DEB7FC;
     color:#E79524;
-    border: #E79524 solid double;
+    border: #E79524 7px double;
     width: 15vw;
     font-size: 200%;
     
@@ -1113,12 +1168,13 @@ font-size: 1.3rem;
 #greeting {
 
     font-weight: bold;
-    font-size: 150%;
+    font-size: 100%;
     text-align: center;
     margin:0;
     padding: 0;
 }
 
+/* LAPTOP */
 #greeting p{
 
     margin:0;
@@ -1131,6 +1187,7 @@ font-size: 1.3rem;
 #coordinates h4{
     margin:0;
     padding: 0;
+    font-size: 120%;
 }
 
 #curentCoordinates {
@@ -1517,6 +1574,23 @@ html {
 }
 
 /* MOBILE */
+
+#currencyConverterFormSubmitButton,
+#currencyConverterFormSubmitButton:not(:hover) {
+
+    border-radius:15px;
+    background-color: #E79524;
+    width: 40vw;
+    color: white;
+    font-size: 150%;
+    border: double black 3px;
+
+
+}
+
+
+
+/* MOBILE */
 #generalInfoTextHeading {
 
     font-size: large;
@@ -1636,9 +1710,31 @@ html {
     height: 75vh;
 }
 
+/* MOBILE */
 #currencyConverterDiv {
     height: 75vh;
+    padding: 5%
 
+}
+
+#currencyHeadingText {
+
+    font-size: 150%;
+}
+
+#currencySpanText {
+
+    font-size: 100%;
+}
+
+.currencyConverterFormLabelClass{
+
+    font-size: 100%;;
+
+}
+
+.currencyConverterFormInputClass{
+    font-size: 100%;
 }
 
 /* MOBILE */
@@ -1749,6 +1845,40 @@ html {
     margin:0;
 
 }
+
+#currencyHeadingText {
+
+    font-size: 100%;
+}
+
+/* SMALL MOBILE */
+#exchangeRateFormInput,
+#currencySubmitButton {
+
+    padding: 0;
+    margin: 0;
+    font-size: 80%;
+    text-align: center;
+    padding: 2.5%;
+    margin: 3.5%;
+    border-radius: 10px;
+
+}
+
+.articleTitleClass{
+
+    font-size: 150%;
+    font-weight: bold;
+
+}
+
+#exchangeRateForm {
+
+    flex-direction: column;
+}
+
+
+
 }
 
 
