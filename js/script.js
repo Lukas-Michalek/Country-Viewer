@@ -9,11 +9,6 @@ $(document).ready(function () {
       });
   }
 
-  // Loading CountryBorders.geo.json and populating Datalist
-
-  // $("#getJson").on("click",function(){
-
-  console.log("Loading CountryBorders.geo.json...");
 
   $.ajax({
     type: "GET",
@@ -21,15 +16,8 @@ $(document).ready(function () {
     dataType: "json",
 
     success: function (result) {
-      console.log(
-        "The result from countryBorders.geo.json is: " + JSON.stringify(result)
-      );
 
-      console.log(result["data"].length);
 
-      console.log("Country Borders loaded...");
-
-//  ** 10:23 CHANGING OPTION VALUE
 
       for (index = 0; index < result["data"].length; index++) {
         let countryName = result["data"][index]["properties"]["name"];
@@ -41,13 +29,11 @@ $(document).ready(function () {
           "<option id= "+ countryCode + " value=" + countryCode + ">" + countryName + "</option>"
         );
 
-        console.log(countryName + " + " + countryCode);
       }
 
     },
   });
 
-  // })
 
   var x = document.getElementById("initial-location");
 
@@ -68,9 +54,6 @@ $(document).ready(function () {
     var initialLatitude = position.coords.latitude;
     var initialLongitude = position.coords.longitude;
 
-    // Shows current coordinates
-    // $("#curentCoordinates").append("<b>Latitude: " + position.coords.latitude +
-    // "<br>Longitude: " + position.coords.longitude + "</b>");
 
     // create map object, tell it to live in 'map' div and give initial latitude, longitude, zoom values
     var map = L.map("map").setView([initialLatitude, initialLongitude], 6);
@@ -90,9 +73,6 @@ $(document).ready(function () {
 
 
 
-  //   L.control.zoom({
-  //     position: 'bottomright'
-  // }).addTo(map);
 
     // ******************************************************************* //
     // *****        CUSTOM MARKER       ********************************** //
@@ -148,7 +128,9 @@ $(document).ready(function () {
       
       
       
-      $("#popUpDiv").empty();
+      // $("#popUpDiv").empty();
+
+      
 
       const popUpDiv = document.createElement("div");
       popUpDiv.setAttribute("id", "popUpDiv");
@@ -170,7 +152,6 @@ $(document).ready(function () {
 
       mainMenuTextDiv.append(mainMenuText);
 
-      // popUpDiv.innerHTML = `What would you like to know about <b>${feature.properties.name}</b> ?<br><br>`;
 
       const mainMenuButtonsDiv = document.createElement('div');
       mainMenuButtonsDiv.setAttribute('id','mainMenuButtonsDiv');
@@ -198,17 +179,19 @@ $(document).ready(function () {
       wikiInfoButton.setAttribute('class','mainMenuButtonClass');
       wikiInfoButton.innerHTML = 'Wiki Information';
 
+      const mainQuitButton = document.createElement('button');
+      mainQuitButton.setAttribute('id','mainQuitButton');
+      mainQuitButton.setAttribute('class','mainMenuButtonClass');
+      mainQuitButton.innerHTML = 'Quit';
+
 
       mainMenuButtonsDiv.append(generalInfoButton);
       mainMenuButtonsDiv.append(weatherInfoButton);
       mainMenuButtonsDiv.append(currencyConverterButton);
       mainMenuButtonsDiv.append(wikiInfoButton);
+      mainMenuButtonsDiv.append(mainQuitButton);
 
 
-     
-
-    //   Leaflet-Popup Close Button
-    // .leaflet-popup-close-button
 
     layer
         .on({
@@ -220,11 +203,8 @@ $(document).ready(function () {
         })
         .bindPopup(popUpDiv);
 
-  
 
       generalInfoButton.onclick = function () {
-
-      
 
         $.ajax({
           url: "php/restCountries.php",
@@ -240,12 +220,6 @@ $(document).ready(function () {
           success: function (result) {
             if (result.status.name == "ok") {
               
-              console.log("General Informatiom Received Fine!");
-
-              console.log(`Response Time was:${result['status']['returnedIn']}`)
-              // console.log("The result from restCountries is: " + (JSON.stringify(result)));
-
-              // $("#popUpDiv").empty();
               $("#mainMenuDiv").hide();
 
               // Creates Div that holds all main buttons and general text. So everything will append to this div and this div will append to popUpDiv so I can easilly hide/show it as needed
@@ -1012,11 +986,9 @@ $(document).ready(function () {
 
                       switchedIndex -= 1;
 
-                      console.log(`cleanNumber is: ${cleanNumber}`)
 
                     }
                     
-                    alert(`cleanNumber is ${cleanNumber}`)
                     return cleanNumber;
 
                   }
@@ -1433,7 +1405,10 @@ $(document).ready(function () {
                   "class",
                   "forecastOverviewDivClass"
                 );
-                popUpDiv.append(forecastOverviewDiv);
+                
+                  popUpDiv.append(forecastOverviewDiv);
+
+                // mainMenuDiv.append(forecastOverviewDiv);
 
                 // * Now I will append 3 above mentioned divs to main forecastOverview Div
 
@@ -1532,9 +1507,17 @@ $(document).ready(function () {
 
                 const forecastMainMenuBackButton = document.createElement('button');
                 forecastMainMenuBackButton.setAttribute('id','forecastMainMenuBackButton');
-                forecastMainMenuBackButton.setAttribute('class','forecastMainMenuBackButtonClass');
-                forecastMainMenuBackButton.innerHTML = `<b>Back</b>`;
+                forecastMainMenuBackButton.setAttribute('class','mainMenuBackButtonClass');
+                forecastMainMenuBackButton.setAttribute('title','To Main Menu')
+                forecastMainMenuBackButton.innerHTML = `Back`;
                 forecastMainMenuBackButtonDiv.append(forecastMainMenuBackButton);
+
+                const forecastQuitButton = document.createElement('button');
+                forecastQuitButton.setAttribute('id','forecastQuitButton');
+                forecastQuitButton.setAttribute('class','mainMenuBackButtonClass');
+                forecastQuitButton.setAttribute('title','Quit current view to check different location')
+                forecastQuitButton.innerHTML = 'Quit';
+                forecastMainMenuBackButtonDiv.append(forecastQuitButton)
 
 
                 forecastMainMenuBackButton.onclick = function(){
@@ -1543,6 +1526,47 @@ $(document).ready(function () {
                     $("#mainMenuDiv").show();
 
                 }
+
+                forecastQuitButton.onclick = function () {
+
+                 
+
+                //  var count = $("#popUpDiv").children().length;
+                  
+                //  for(let i = 0; i < $("#popUpDiv").children().length; i++){
+
+                //   var childId = $(this).attr('id');
+
+                //   if(childId != '')
+
+
+                //  }
+                 
+                 
+                //  alert(count)
+                //   // $("#forecastOverviewDiv").remove();
+                //   // $("#mainMenuDiv").show();
+                
+                $("#popUpDiv").children() 
+                .each(function() {
+
+                  var childId = $(this).attr('id');
+
+                  if( childId !== 'mainMenuDiv'){
+                    $(this).remove();
+
+                    console.log(`${this} was removed`);
+                  }
+                })
+
+                $('#mainMenuDiv').show();
+              
+              
+              
+              }
+
+
+
 
                 // * Get the Name of the Day Function
                 function getDayName(dateString) {
@@ -3057,14 +3081,13 @@ $(document).ready(function () {
 
           success: function(result){
             
-            console.log(JSON.stringify(result));
-
 
             $("#mainMenuDiv").hide();
 
         if(document.getElementById('wikiInfoDiv')){
 
           $('#wikiInfoDiv').show();
+          
 
         } else {
 
@@ -3091,7 +3114,7 @@ $(document).ready(function () {
 
             const noArticlesFoundText = document.createElement('p');
             noArticlesFoundText.setAttribute('id','noArticlesFoundText');
-            noArticlesFoundText.innerHTML = 'Well, It seems that there are no Wiki Articles tied to this location. We would recommend choosing another part or country';
+            noArticlesFoundText.innerHTML = 'Well, It seems that there are no Wiki Articles tied to this exact location. We would recommend choosing another part or country';
           
             wikiInfoDiv.append(noArticlesFoundText)
 
@@ -3139,22 +3162,45 @@ $(document).ready(function () {
       }
 
 
-          const wikiInfoBackButtonDiv = document.createElement('div');
-          wikiInfoBackButtonDiv.setAttribute('id','wikiInfoBackButtonDiv');
-          wikiInfoBackButtonDiv.setAttribute('class','mainMenuBackButtonDivClass');
-          wikiInfoDiv.append(wikiInfoBackButtonDiv);
+
+
+          const wikiInfoBackButtonsDiv = document.createElement('div');
+          wikiInfoBackButtonsDiv.setAttribute('id','wikiInfoBackButtonsDiv');
+          wikiInfoBackButtonsDiv.setAttribute('class','mainMenuBackButtonDivClass');
+          wikiInfoDiv.append(wikiInfoBackButtonsDiv);
 
           const wikiInfoBackButton = document.createElement('button');
           wikiInfoBackButton.setAttribute('id','wikiInfoBackButton');
           wikiInfoBackButton.setAttribute('class','mainMenuBackButtonClass');
+          wikiInfoBackButton.setAttribute('title','To Main Menu.');
+
           wikiInfoBackButton.innerHTML = 'Back';
-          wikiInfoBackButtonDiv.append(wikiInfoBackButton);
+          wikiInfoBackButtonsDiv.append(wikiInfoBackButton);
 
 
+
+
+          const wikiInfoQuitButton = document.createElement('button');
+          wikiInfoQuitButton.setAttribute('id','wikiInfoQuitButtonDiv');
+          wikiInfoQuitButton.setAttribute('class','mainMenuBackButtonClass');
+          wikiInfoQuitButton.setAttribute('title','Quit current view to check different location.')
+          wikiInfoQuitButton.innerHTML = `Quit`;
+          wikiInfoBackButtonsDiv.append(wikiInfoQuitButton);
+          
+          
           wikiInfoBackButton.onclick = function(){
 
             $("#wikiInfoDiv").hide();
             $("#mainMenuDiv").show();
+            
+
+          }
+
+          wikiInfoQuitButton.onclick = function(){
+
+            $("#mainMenuDiv").show();
+            $("#wikiInfoDiv").remove();
+            
 
           }
 
@@ -3181,6 +3227,13 @@ $(document).ready(function () {
         
 
       }
+
+      mainQuitButton.onclick = function (){
+
+        $('#popUpDiv').remove();
+      }
+
+      
 
 
       
@@ -3225,6 +3278,7 @@ $(document).ready(function () {
     }
 
    
+    
 
     function getCoords(e) {
       var coord = e.latlng.toString().split(","); // LatLng(50.876459, 21.263776)

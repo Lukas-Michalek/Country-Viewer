@@ -95,7 +95,7 @@
 .mainMenuDivClass {
 
     width: 80vw;
-    height: 80vh;
+    height: 77.5vh;
     display: flex;
     /* justify-content: space-around; */
  
@@ -103,9 +103,22 @@
     align-items: center;
     justify-content: center;
 
-    gap: 7.5%;
+    gap: 5%;
+    padding:3%;
+    overflow: auto;
 
 
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.mainMenuDivClass::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.mainMenuDivClass {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
 
@@ -137,9 +150,11 @@ cursor: pointer;
 user-select: none;
 -webkit-user-select: none;
 touch-action: manipulation;
-width: 20%;
+
 font-size: 200%;
 width: 30%;
+height: 10vh;
+
 
 
 
@@ -212,7 +227,7 @@ width: 50%;
 }
 
 
-
+/* DEFAULT */
 #currencyHeadingText {
 
     text-align: center;
@@ -300,6 +315,13 @@ width: 50%;
     font-weight: bold;
     font-size: 125%;
     padding: 0 10%;
+}
+
+#wikiInfoBackButtonsDiv {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
 
 .generalInfoSubDivBackButton:hover {
@@ -645,6 +667,13 @@ border-radius: .5rem;
 
 }
 
+#forecastMainMenuBackButtonDiv{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 4% 0 4% 0;
+}
+
 .forecastDayBackButtonClass,
 .forecastMainMenuBackButtonClass
 {
@@ -790,6 +819,7 @@ text-align: center;
     row-gap: 30px;
     flex-wrap: wrap;
     /* padding: 0 0 10% 0; */
+
     
 }
 
@@ -797,15 +827,15 @@ text-align: center;
 .mainMenuButtonClass {
 
     width: 25vw;
-    height: 15vh;
+    height: 13vh;
     border-radius: 10px;
     color: white;
     text-align: center;
     transition: 0.5s;
-    background-size: 200% auto;
+    background-size: 150% auto;
     border: 0px;
     font-weight: 700;
-    font-size:190%;
+    font-size:1.7em;
     box-shadow: 0px 0px 14px -7px #f09819;
     background-image: linear-gradient(45deg, #FF512F 0%, #F09819  51%, #FF512F  100%);
     cursor: pointer;
@@ -1518,6 +1548,9 @@ html {
 }
 
 
+
+
+
 /* MOBILE */
 .mainMenuButtonClass {
 
@@ -1570,6 +1603,35 @@ html {
     flex-direction: column;
     gap:0;  
 
+
+}
+
+#forecastMainMenuBackButtonDiv,
+#wikiInfoBackButtonsDiv {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#exchangeRateForm {
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+#exchangeRateFormInput,
+#currencySubmitButton {
+
+    padding: 0;
+    margin: 0;
+    font-size: 80%;
+    text-align: center;
+    padding: 2.5%;
+    margin: 3.5%;
+    border-radius: 10px;
 
 }
 
@@ -1719,7 +1781,7 @@ html {
 
 #currencyHeadingText {
 
-    font-size: 150%;
+    font-size: 100%;
 }
 
 #currencySpanText {
@@ -1795,6 +1857,10 @@ html {
     padding: 10% 0;
 }
 
+.articleSummaryClass {
+
+    overflow: auto;
+}
 
 
 }
@@ -1837,6 +1903,7 @@ html {
    height: 75vh;
 
 }
+
 
 
 #currencyHeadingDiv {
