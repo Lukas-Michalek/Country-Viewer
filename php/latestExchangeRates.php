@@ -9,9 +9,6 @@
     $url = 'openexchangerates.org/api/latest.json?app_id=eabcbd09dc734c58a70111751571a26d';
     
     
-    // 49.03878
-    // 
-    // api.openweathermap.org/data/2.5/forecast?lat=49.03878&lon=6.174316&appid=a605e65e9c3dc730e12e89b99f68d56c
 
 
     $ch = curl_init();

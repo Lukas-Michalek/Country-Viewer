@@ -35,7 +35,6 @@
         $output["borders"] = $decode[0]["borders"];
     } 
 
-    // $output["borders"] = $decode[0]["borders"];
 
     $output["cca3"] = $decode[0]["cca3"];
 

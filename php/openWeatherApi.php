@@ -11,9 +11,6 @@
     $url = 'api.openweathermap.org/data/2.5/forecast?lat=' . $_REQUEST['lat'] . '&lon=' . $_REQUEST['lon'] .'&appid=a605e65e9c3dc730e12e89b99f68d56c';
 
 
-    // 49.03878
-    // 
-    // api.openweathermap.org/data/2.5/forecast?lat=49.03878&lon=6.174316&appid=a605e65e9c3dc730e12e89b99f68d56c
 
 
     $ch = curl_init();

@@ -8,7 +8,6 @@
     $url = 'http://api.geonames.org/findNearbyWikipediaJSON?lat=' . $_REQUEST['lat'] . '&lng=' .$_REQUEST['lng'] . '&username=celebros91';
 
 
-// http://api.geonames.org/findNearbyWikipediaJSON?lat=50.05207&lng=17.714049&username=celebros91
 
 
     $ch = curl_init();
