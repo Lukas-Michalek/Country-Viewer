@@ -1529,23 +1529,7 @@ $(document).ready(function () {
 
                 forecastQuitButton.onclick = function () {
 
-                 
-
-                //  var count = $("#popUpDiv").children().length;
-                  
-                //  for(let i = 0; i < $("#popUpDiv").children().length; i++){
-
-                //   var childId = $(this).attr('id');
-
-                //   if(childId != '')
-
-
-                //  }
-                 
-                 
-                //  alert(count)
-                //   // $("#forecastOverviewDiv").remove();
-                //   // $("#mainMenuDiv").show();
+                
                 
                 $("#popUpDiv").children() 
                 .each(function() {
@@ -3229,6 +3213,27 @@ $(document).ready(function () {
       }
 
       mainQuitButton.onclick = function (){
+
+
+
+
+        // if(document.getElementById(`wikiInfoDiv`)){
+        //   $('#wikiInfoDiv').remove();
+        // } else if(document.getElementById(`forecastOverviewDiv`)){
+        //   $('#forecastOverviewDiv').remove();
+        // }
+
+        $("#popUpDiv").children() 
+        .each(function() {
+
+          var childId = $(this).attr('id');
+
+          if( childId !== 'mainMenuDiv'){
+            $(this).remove();
+
+            console.log(`${this} was removed`);
+          }
+        })
 
         $('#popUpDiv').remove();
       }
