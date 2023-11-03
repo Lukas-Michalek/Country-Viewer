@@ -62,7 +62,8 @@ $(document).ready(function () {
     L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 19,
       attribution:
-        '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | Icons by <a href="https://icons8.com/">icons8.com </a>',
+        
     }).addTo(map);
 
     // Positioning if Atribution on Leaflet (map) div
@@ -125,11 +126,6 @@ $(document).ready(function () {
     }
 
     function onEachFeature(feature, layer) {
-      
-      
-      
-      // $("#popUpDiv").empty();
-
       
 
       const popUpDiv = document.createElement("div");
@@ -246,7 +242,6 @@ $(document).ready(function () {
                 generalInfoText.innerHTML = 'What would you like to know specifically?';
 
                 // * This Works!
-                // popUpDiv.appendChild(generalInfoText)
                 generalInfoTextDiv.appendChild(generalInfoText);
 
                 // ************** Buttons *********** //
@@ -377,11 +372,6 @@ $(document).ready(function () {
               }
 
               countryNameButton.onclick = function () {
-                // $("#popUpDiv").empty();
-                // $("#generalInfoText").toggle();
-                // popUpDiv.removeChild(countryNameButton);
-
-                // $("#countryNameButton").toggle();
 
                 $("#generalInfoMenuDiv").hide();
 
@@ -394,7 +384,6 @@ $(document).ready(function () {
                   $("#popUpDiv").append(countryNameDiv);
 
                   var nativeNamekey = Object.keys(result["name"]["nativeName"]);
-                  console.log("Keys are: " + nativeNamekey);
 
                   const countryNameDivTextPartDiv = document.createElement('div');
                   countryNameDivTextPartDiv.setAttribute('id','countryNameDivTextPartDiv');
@@ -495,11 +484,9 @@ $(document).ready(function () {
 
                   var currencyNamesArr = Object.keys(result["currency"]);
 
-                  console.log("Currency names are: " + currencyNamesArr);
 
                   var currencyName = currencyNamesArr[0];
 
-                  console.log("Currency name is: " + currencyName);
 
                   $("#currencyTextDiv").append(
                     `<p>The official currency of ${feature.properties.name} is: <b>${result["currency"][currencyName]["name"]}</b></p>`
@@ -611,7 +598,6 @@ $(document).ready(function () {
                               
                               for (var currencyCode in currencyData) {
 
-                                console.log(currencyCode)
                                 console.log( currencyData[currencyCode])
                       
                                 $("#currencyList").append(
@@ -1037,7 +1023,6 @@ $(document).ready(function () {
 
                   const carDetailsArr = Object.keys(result["drivingSide"]);
 
-                  console.log(`Car details Arr = ${carDetailsArr}`);
 
                   const side = carDetailsArr[1];
                   const sign = carDetailsArr[0];
@@ -1310,16 +1295,13 @@ $(document).ready(function () {
                       // * All neighbor states are represent in JSON as array, so for example [AU,SK,HRV..]. What I do here is to use these values and thanks to the fact that I have already populated datalist #countryList with all states where for example AU is value and Austria is the written text that belongs to that value. So I will just pair them and get them printed with full name as well
 
                       let neighbourValue = result["borders"][index];
-                      console.log(`neighbourValue is ${neighbourValue}`)
                       
                       let neighborState = $(
                         "#countryList option[value=" + neighbourValue + "]"
                       ).text();
 
 
-                      // let neighborState = document.getElementById("countryList").options.namedItem(`${neighbourValue}`).value;
 
-                      console.log(`neighborState is ${neighborState}`)
 
                       $("#neighboursTextDiv").append(
                         `<p><b> - ${neighbourValue} - ${neighborState}</b></p>`
@@ -1363,14 +1345,11 @@ $(document).ready(function () {
       };
 
       weatherInfoButton.onclick = function () {
-        console.log("weather Button Clicked!");
         
 
         let lat = parseFloat(document.getElementById("lattitude").innerHTML);
         let long = parseFloat(document.getElementById("longitude").innerHTML);
 
-        console.log(`Current Lattitude is: ${lat}`);
-        console.log(`Current Longitude is: ${long}`);
 
         $.ajax({
           url: "php/openWeatherApi.php",
@@ -1384,9 +1363,7 @@ $(document).ready(function () {
 
           success: function (result) {
             if (result.status.name == "ok") {
-              console.log("API WEATHER DATA RECEIVED!");
 
-              // console.log("The result from openWeatherApi request is: " + (JSON.stringify(result)));
 
               $("#mainMenuDiv").hide();
 
@@ -1408,11 +1385,7 @@ $(document).ready(function () {
                 
                   popUpDiv.append(forecastOverviewDiv);
 
-                // mainMenuDiv.append(forecastOverviewDiv);
 
-                // * Now I will append 3 above mentioned divs to main forecastOverview Div
-
-                // * Starting with heading div
                 const forecastOverviewHeadingDiv =
                   document.createElement("div");
                 forecastOverviewHeadingDiv.setAttribute(
@@ -1539,7 +1512,6 @@ $(document).ready(function () {
                   if( childId !== 'mainMenuDiv'){
                     $(this).remove();
 
-                    console.log(`${this} was removed`);
                   }
                 })
 
@@ -1809,13 +1781,6 @@ $(document).ready(function () {
                     dayButton.innerHTML = `<b>${daysArray[i]}</b>`;
                     dailyForecastThumbDiv.append(dayButton);
 
-                    // dailyForecastThumbDiv.append('<button id=' + daysArray[i] + '>' + daysArray[i] + '</button>');
-
-                    // const dailyButton = document.createElement('button');
-                    // dailyButton.setAttribute('id',`${daysArray[i]}`);
-                    // dailyButton.innerHTML = (`${daysArray[i]}`);
-
-                    // const firstDayIndexes = 0-7
                   }
                 }
 
@@ -1833,9 +1798,6 @@ $(document).ready(function () {
 
                   const forecastDiv = document.getElementById(divName);
 
-                  // const firstDayDiv = document.getElementById('firstDayDiv');
-
-                  // let index = startingIndex;
 
                   // * Forecast Day Upper Div
                   const forecastDayUpperPartDiv = document.createElement("div");
@@ -1969,8 +1931,6 @@ $(document).ready(function () {
                     "additionalWeatherInfoText"
                   );
 
-                  // Average of all
-                  // const precipitation = result['list'][index]
 
                   const allPrecipitationArr = [];
 
@@ -2132,10 +2092,6 @@ $(document).ready(function () {
                   forecastDayBackButton.innerHTML = `<b>Back</b>`;
                   forecastDiv.append(forecastDayBackButton);
 
-                  // const firstDayBackButton = document.createElement('button');
-                  // firstDayBackButton.setAttribute('id','firstDayBackButton');
-                  // firstDayBackButton.innerHTML = 'First Day Back Button';
-                  // forecastDiv.append(firstDayBackButton)
 
                   const currentTime = currentDateTime.slice(11, 19);
 
@@ -2264,12 +2220,6 @@ $(document).ready(function () {
                     result["list"][shiftedIndex]["dt_txt"].slice(11, 13)
                   );
 
-                  // while(hourOfMeasurment != 0){
-
-                  //   hourOfMeasurment = parseInt((result['list'][shiftedIndex]['dt_txt']).slice(11,13))
-
-                  //   shiftedIndex++
-                  // }
 
                   if (hourOfMeasurment === 0) {
                     shiftedIndex = 0;
@@ -2338,17 +2288,13 @@ $(document).ready(function () {
                       nightTempValueString = nightTempValue.slice(0, -2);
                       nightTempValue = parseInt(nightTempValueString);
 
-                      console.log(`${typeof nightTempValue}`);
 
-                      console.log(`dayTempValue at Celsius is ${dayTempValue}`);
 
                       let dayCelsiusValue = (dayTempValue - 32) * (5 / 9);
 
                       dayCelsiusValue = Math.round(dayCelsiusValue);
 
-                      console.log(
-                        `nightTempValue at Celsius is ${nightTempValue}`
-                      );
+                     
 
                       let nightCelsiusValue = (nightTempValue - 32) * (5 / 9);
 
@@ -2360,49 +2306,6 @@ $(document).ready(function () {
                     }
                   });
 
-                  // // I am calling the forecastDiv as parent, as I will be extracting it`s children
-                  // var parent = document.getElementById('forecastDiv');
-
-                  // // To find out if the values are Celsius I need to know the unit used
-
-                  // //  I will get the actual value of temperature this way
-
-                  // const dayDivTempValue = (((((parent.childNodes[0]).childNodes[0]).childNodes[0]).childNodes[1]).childNodes[1]).innerHTML;
-
-                  // // And now to get the unit
-
-                  // if((dayDivTempValue.slice(29,31)) === '°C'){
-                  //   return;
-                  // } else {
-
-                  //   parent.children()
-                  //           .each(function ()
-                  // }
-
-                  // const dayDiv = ((parent.childNodes[0]).childNodes[0]).childNodes[0]
-
-                  // const dayDivTemp = (((parent.childNodes[0]).childNodes[0]).childNodes[0]).childNodes[1]
-
-                  // const nightDiv = ((parent.childNodes[0]).childNodes[0]).childNodes[1]
-
-                  // const nightDivTempValue = ((((parent.childNodes[0]).childNodes[0]).childNodes[1]).childNodes[1]).childNodes[1]
-
-                  // const lol = nightDivTempValue.innerHTML;
-
-                  // const doublelol = lol.slice(0,4);
-
-                  // console.log(lol)
-
-                  // // <h4 id="minNightTempValue">13°C</h4>
-
-                  // const realVal = lol.slice(29,31);
-
-                  // if(realVal === '°C'){
-                  //   alert('It is celsius');
-                  // }
-
-                  // dayDivTempValue.innerHTML = `<h4>999°C</h4>`
-                  // nightDivTempValue.innerHTML = `<h4>896</h4>`
                 };
 
                 overviewTempFahrenheitButton.onclick = function () {
@@ -2415,15 +2318,11 @@ $(document).ready(function () {
                       this.childNodes[0].childNodes[1].childNodes[1]
                         .childNodes[1].childNodes[0].innerHTML;
 
-                    console.log(nightTempValue);
 
                     if (
                       dayTempValue.includes("°F") &&
                       nightTempValue.includes("°F")
                     ) {
-                      console.log(
-                        `Temperature is in Fahrenheit nothing to do here`
-                      );
                       return;
                     } else {
                       // Now I know that the unit is not °F so it must be °C and I need to convert Celsius to Fahrenheit
@@ -2434,17 +2333,11 @@ $(document).ready(function () {
                       let nightTempValueString = nightTempValue.slice(0, -2);
                       nightTempValue = parseInt(nightTempValueString);
 
-                      console.log(
-                        `nightTempValueString is ${nightTempValueString}`
-                      );
 
                       let dayFahrenheitValue = Math.round(
                         dayTempValue * 1.8 + 32
                       );
 
-                      console.log(
-                        `dayFahrenheitValue is ${dayFahrenheitValue}`
-                      );
 
                       let nightFahrenheitValue = Math.round(
                         nightTempValue * 1.8 + 32
@@ -2468,7 +2361,6 @@ $(document).ready(function () {
 
 
                 firstDayButton.onclick = function () {
-                  // $("#forecastDiv").hide();
 
                   $("#forecastOverviewDiv").hide();
 
@@ -2481,7 +2373,6 @@ $(document).ready(function () {
 
                     popUpDiv.append(firstDayDiv);
 
-                    // populateToday(dayName)
 
                     populateForecastDiv(0, "firstDayDiv", firstDayId);
                   }
@@ -2495,7 +2386,6 @@ $(document).ready(function () {
                 const secondDayButton = document.getElementById(secondDayId);
 
                 secondDayButton.onclick = function () {
-                  // $("#forecastDiv").hide();
                   $("#forecastOverviewDiv").hide();
 
                   if (document.getElementById("secondDayDiv")) {
@@ -2510,11 +2400,6 @@ $(document).ready(function () {
                     secondDayDiv.setAttribute("id", "secondDayDiv");
                     secondDayDiv.setAttribute("class", "secondDayDivClass");
 
-                    // const secondDayDivBackButton = document.createElement('button');
-                    // secondDayDivBackButton.setAttribute('id','secondDayDivBackButton');
-                    // secondDayDivBackButton.innerHTML = `Second Day Back`;
-
-                    // secondDayDiv.append(secondDayDivBackButton)
 
                    popUpDiv.append(secondDayDiv);
 
@@ -2548,11 +2433,6 @@ $(document).ready(function () {
                     thirdDayDiv.setAttribute("id", "thirdDayDiv");
                     thirdDayDiv.setAttribute("class", "thirdDayDivClass");
 
-                    // const thirdDayDivBackButton = document.createElement('button');
-                    // thirdDayDivBackButton.setAttribute('id','thirdDayDivBackButton');
-                    // thirdDayDivBackButton.innerHTML = `Third Day Back`;
-
-                    // thirdDayDiv.append(thirdDayDivBackButton)
 
                    popUpDiv.append(thirdDayDiv);
 
@@ -2586,11 +2466,6 @@ $(document).ready(function () {
                     fourthDayDiv.setAttribute("id", "fourthDayDiv");
                     fourthDayDiv.setAttribute("class", "fourthDayDivClass");
 
-                    // const fourthDayDivBackButton = document.createElement('button');
-                    // fourthDayDivBackButton.setAttribute('id','fourthDayDivBackButton');
-                    // fourthDayDivBackButton.innerHTML = `Fourth Day Back`;
-
-                    // fourthDayDiv.append(fourthDayDivBackButton)
 
                     popUpDiv.append(fourthDayDiv);
 
@@ -2624,11 +2499,6 @@ $(document).ready(function () {
                     fifthDayDiv.setAttribute("id", "fifthDayDiv");
                     fifthDayDiv.setAttribute("class", "fifthDayDivClass");
 
-                    // const fifthDayDivBackButton = document.createElement('button');
-                    // fifthDayDivBackButton.setAttribute('id','fifthDayDivBackButton');
-                    // fifthDayDivBackButton.innerHTML = `Fifth Day Back`;
-
-                    // fifthDayDiv.append(fifthDayDivBackButton)
 
                     popUpDiv.append(fifthDayDiv);
 
@@ -2645,34 +2515,19 @@ $(document).ready(function () {
                   };
                 };
 
-                // firstDay.onclick = function(){
-                //   alert(`${firstDay} clicked!`);
-                // }
               }
             }
           },
 
           error: function (jqXHR, textStatus, errorThrown) {
-            console.log("The Wrather Api data have not been sent");
           },
         });
 
         function unixTimeConverter(unixTimestamp) {
-          console.log(`Unix Timestamp is: ${unixTimestamp}`);
 
           var JSdate = new Date(unixTimestamp);
 
-          console.log(`JS DATE is: ${JSdate}`);
 
-          // Generate date string
-          // console.log(JSdate.toLocaleDateString("en-US"));   // Prints: 5/6/2022
-          // console.log(JSdate.toLocaleDateString("en-GB"));   // Prints: 06/05/2022
-          // console.log(JSdate.toLocaleDateString("default")); // Prints: 5/6/2022
-
-          // Generate time string
-          // console.log(JSdate.toLocaleTimeString("en-US"));   // Prints: 1:10:34 PM
-          // console.log(JSdate.toLocaleTimeString("it-IT"));   // Prints: 13:10:34
-          // console.log(JSdate.toLocaleTimeString("default")); // Prints: 1:10:34 PM
 
           const date = JSdate.toLocaleDateString("en-GB");
           const cleanDate = date.replace("/", "-");
@@ -3217,11 +3072,6 @@ $(document).ready(function () {
 
 
 
-        // if(document.getElementById(`wikiInfoDiv`)){
-        //   $('#wikiInfoDiv').remove();
-        // } else if(document.getElementById(`forecastOverviewDiv`)){
-        //   $('#forecastOverviewDiv').remove();
-        // }
 
         $("#popUpDiv").children() 
         .each(function() {
@@ -3231,7 +3081,6 @@ $(document).ready(function () {
           if( childId !== 'mainMenuDiv'){
             $(this).remove();
 
-            console.log(`${this} was removed`);
           }
         })
 
@@ -3286,7 +3135,7 @@ $(document).ready(function () {
     
 
     function getCoords(e) {
-      var coord = e.latlng.toString().split(","); // LatLng(50.876459, 21.263776)
+      var coord = e.latlng.toString().split(","); 
 
       var lat = coord[0].replace("LatLng(", "");
       var long = coord[1].replace(")", "");
