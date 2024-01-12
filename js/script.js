@@ -1384,7 +1384,6 @@ $(document).ready(function () {
             success: function (result) {
               if (result.status.name == "ok") {
 
-                console.log(JSON.stringify(result))
   
   
                 $("#mainMenuDiv").hide();
@@ -1683,20 +1682,32 @@ $(document).ready(function () {
   
                       let lastIndex = j + 8;
   
-                      for (j; j < lastIndex; j++) {
-                        if (result["list"][j]["sys"]["pod"] === "d") {
-                          dayTempArray.push(result["list"][j]["main"]["temp"]);
-  
-                          dayIconArray.push(
-                            result["list"][j]["weather"][0]["icon"]
-                          );
-                        } else {
-                          nightTempArray.push(result["list"][j]["main"]["temp"]);
-  
-                          nightIconArray.push(
-                            result["list"][j]["weather"][0]["icon"]
-                          );
-                        }
+                      
+
+                        while(j < 40){
+
+                        console.log(`J is => ${j}`)
+
+
+                      
+
+                        
+                          if (result["list"][j]["sys"]["pod"] === "d") {
+                            dayTempArray.push(result["list"][j]["main"]["temp"]);
+    
+                            dayIconArray.push(
+                              result["list"][j]["weather"][0]["icon"]
+                            );
+                          } else {
+                            nightTempArray.push(result["list"][j]["main"]["temp"]);
+    
+                            nightIconArray.push(
+                              result["list"][j]["weather"][0]["icon"]
+                            );
+                          }
+
+                          j++;
+                    
                       }
   
                       // This means that it is either 2nd, 3rd, 4th or 5th day and therefore we need day shift method so we can get average from 03:00 - 00:00
@@ -2165,7 +2176,7 @@ $(document).ready(function () {
   
                     $(`#fullWeatherInfo${divName}`).empty();
   
-                    while (startingIndex < lastIndex) {
+                    while (startingIndex < lastIndex && startingIndex < 40) {
                       let weatherWidgetDiv = document.createElement("div");
                       weatherWidgetDiv.setAttribute(
                         "id",
@@ -3159,6 +3170,8 @@ $(document).ready(function () {
   
     $("#countryForm").submit(function (event) {
       event.preventDefault();
+
+
   
       // Check that user submit only valid country even though he would use upper or lower
   
@@ -3205,6 +3218,7 @@ $(document).ready(function () {
             
             const country = (worldCountries['features']).filter((country) => country["properties"]["iso_a3"] === countryCodeCC3);
   
+
   
   
   
